@@ -1,0 +1,47 @@
+CREATE TABLE User (
+    UserId INT PRIMARY KEY IDENTITY(1,1),
+    Name NVARCHAR(255) NOT NULL,
+    Role NVARCHAR(50) NOT NULL CHECK (Role IN ('consumer', 'manager'))
+);
+
+CREATE TABLE Project (
+    ProjectId INT PRIMARY KEY IDENTITY(1,1),
+    UserId INT NOT NULL FOREIGN KEY REFERENCES User(UserId),
+    Title NVARCHAR(255) NOT NULL,
+    Description NVARCHAR(MAX),
+    CreationDate DATETIME DEFAULT GETDATE(),
+    UNIQUE (UserId, Title) -- Um usuário não pode ter dois projetos com o mesmo título
+);
+
+CREATE TABLE Task (
+    TaskId INT PRIMARY KEY IDENTITY(1,1),
+    ProjectId INT NOT NULL FOREIGN KEY REFERENCES Project(ProjectId),
+    UserId INT NOT NULL FOREIGN KEY REFERENCES User(UserId),
+    Title NVARCHAR(255) NOT NULL,
+    Description NVARCHAR(MAX),
+    CreationDate DATETIME DEFAULT GETDATE(),
+    DueDate DATETIME NOT NULL,
+    Status NVARCHAR(50) NOT NULL CHECK (Status IN ('To Do', 'In Progress', 'Done')),
+    Priority NVARCHAR(50) NOT NULL CHECK (Priority IN ('Low', 'Medium', 'High'))
+);
+
+CREATE TABLE TaskComment (
+    TaskCommentId INT PRIMARY KEY IDENTITY(1,1),
+    TaskId INT NOT NULL FOREIGN KEY REFERENCES Task(TaskId),
+    ProjectId INT NOT NULL FOREIGN KEY REFERENCES Project(ProjectId),
+    UserId INT NOT NULL FOREIGN KEY REFERENCES User(UserId),
+    Comment NVARCHAR(MAX) NOT NULL,
+    CommentDate DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE TaskUpdate (
+    TaskUpdateId INT PRIMARY KEY IDENTITY(1,1),
+    TaskId INT NOT NULL FOREIGN KEY REFERENCES Task(TaskId),
+    ProjectId INT NOT NULL FOREIGN KEY REFERENCES Project(ProjectId),
+    UserId INT NOT NULL FOREIGN KEY REFERENCES User(UserId),
+    ModifiedField NVARCHAR(255) NOT NULL, -- Campo modificado (ex.: Status, Description)
+    OldFieldValue NVARCHAR(MAX),         -- Valor antigo (se aplicável)
+    NewFieldValue NVARCHAR(MAX),         -- Novo valor (se aplicável)
+    ModificationDate DATETIME DEFAULT GETDATE()
+);
+

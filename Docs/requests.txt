@@ -1,0 +1,84 @@
+# Project
+
+{
+"projectId": 4,
+"title": "Vitamina de Banana",
+"description": "Projeto de produção de uma deliciosa vitamina de banana nanica! asfasfs",
+"userId": 5
+}
+
+# POST Project Task 
+{
+  "title": "[#4] Pegar o leite do armario",
+  "description": "Pegar o leite e abrir",
+  "dueDate": "2024-12-18T20:14:12.863Z",
+  "status": 1,
+  "priority": 1,
+  "userId": 5,
+  "projectId": 4
+}
+
+{
+  "title": "[#4] Misturar no liquidificador",
+  "description": "Pegar a banana picada e o leite, e misturar no liquidificador",
+  "dueDate": "2024-12-18T20:14:12.863Z",
+  "status": 1,
+  "priority": 1,
+  "userId": 5,
+  "projectId": 4
+}
+{
+  "title": "[#4] Adoçar",
+  "description": "Misturar açucar, adoçante a gosto. Pode pular essa etapa se preferir um sabor mais natural",
+  "dueDate": "2024-12-18T20:14:12.863Z",
+  "status": 1,
+  "priority": 1,
+  "userId": 5,
+  "projectId": 4
+}
+
+{
+  "title": "[#4] Bater",
+  "description": "Bater a mistura por alguns mitunos até ficar uniforme",
+  "dueDate": "2024-12-18T20:14:12.863Z",
+  "status": 1,
+  "priority": 1,
+  "userId": 5,
+  "projectId": 4
+}
+
+{
+  "title": "[#4] Servir",
+  "description": "Servir a vitamina em copos",
+  "dueDate": "2024-12-18T20:14:12.863Z",
+  "status": 1,
+  "priority": 1,
+  "userId": 5,
+  "projectId": 4
+}
+
+{
+  "title": "[#4] Beber",
+  "description": "Agora é só beber",
+  "dueDate": "2024-12-18T20:14:12.863Z",
+  "status": 1,
+  "priority": 1,
+  "userId": 5,
+  "projectId": 4
+}
+
+
+# Put Project Task
+{
+	"title": "[#4] Servir no Copo",
+	"description": "Servir a vitamina em copos",
+	"creationDate": "2024-12-02T20:25:55.130331",
+	"dueDate": "2024-12-18T20:14:12.863",
+	"status": 1,
+	"priority": 1,
+	"userId": 5,
+	"projectId": 4
+}
+
+
+
