@@ -8,7 +8,7 @@ using System.Text.Json;
 
 namespace EclipseTaskManager.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("v1/api/[controller]")]
     [ApiController]
     public class ReportsController : ControllerBase
     {

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EclipseTaskManager.Controllers;
 
-[Route("api/[controller]")]
+[Route("v1/api/[controller]")]
 [ApiController]
 public class UsersController : ControllerBase
 {

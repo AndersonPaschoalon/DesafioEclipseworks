@@ -10,7 +10,7 @@ namespace EclipseTaskManager.Controllers;
 /// TODO: provavelmente posso remover esse controller.
 /// </summary>
 
-[Route("api/[controller]")]
+[Route("v1/api/[controller]")]
 [ApiController]
 public class ProjectTaskCommentsController : ControllerBase
 {
