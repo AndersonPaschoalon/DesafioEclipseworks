@@ -3,6 +3,8 @@ using EclipseTaskManager.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.ObjectModel;
+using System.Text.Json;
 
 namespace EclipseTaskManager.Controllers
 {
@@ -31,13 +33,12 @@ namespace EclipseTaskManager.Controllers
             var daysPriorDateTime = DateTime.Now.AddDays(-daysPrior);
             var projectTasks = _context.ProjectTasks
                         .AsNoTracking()
-                        .Where(t => t.Status == ProjectTask.ProjectTaskStatus.Done && t.ConclusionDate >= daysPriorDateTime);
+                        .Where(t => t.Status == ProjectTask.ProjectTaskStatus.Done && t.ConclusionDate >= daysPriorDateTime)
+                        .ToList();
 
             Report report = new Report();
             if (projectTasks is not null) 
             {
-                
-
                 Dictionary<int, ReportUser> dicRU = new Dictionary<int, ReportUser>();
                 foreach (var task in projectTasks) 
                 {
@@ -53,11 +54,14 @@ namespace EclipseTaskManager.Controllers
                         dicRU.Add(task.UserId, ru);
                     }
                 }
-                foreach (var entry in dicRU) 
-                {
-                    report.usersReports.Add(entry.Value);
-                }
+
+                //report.usersReports = dicRU.Values.ToList();
+                report.userReports = dicRU;
             }
+
+            var json = JsonSerializer.Serialize(report);
+            Console.WriteLine("========" +  json);
+
             return Ok(report);
         }
     }

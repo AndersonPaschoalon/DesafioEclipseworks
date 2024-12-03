@@ -190,8 +190,9 @@ public class ProjectTasksController : ControllerBase
             // current task is not concludes, but it is being updated as done
             if (currentTask.Status != ProjectTask.ProjectTaskStatus.Done && updatedTask.Status == ProjectTask.ProjectTaskStatus.Done)
             {
-                currentTask.ConclusionDate = DateTime.Now;
+                updatedTask.ConclusionDate = DateTime.Now;
             }
+
 
             // Update the current entity properties
             _context.Entry(currentTask).CurrentValues.SetValues(updatedTask);

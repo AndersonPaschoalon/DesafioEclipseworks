@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EclipseTaskManager", "Eclip
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{299CC7B3-E4DA-466B-B25C-2215B124945B}"
 	ProjectSection(SolutionItems) = preProject
+		..\..\.gitignore = ..\..\.gitignore
+		..\..\README.md = ..\..\README.md
 		..\..\Docs\TODO.txt = ..\..\Docs\TODO.txt
 	EndProjectSection
 EndProject

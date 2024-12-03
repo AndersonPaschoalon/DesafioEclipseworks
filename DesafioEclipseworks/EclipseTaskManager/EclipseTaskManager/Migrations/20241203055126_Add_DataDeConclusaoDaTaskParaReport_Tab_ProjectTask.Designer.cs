@@ -4,6 +4,7 @@ using EclipseTaskManager.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EclipseTaskManager.Migrations
 {
     [DbContext(typeof(EclipseTaskManagerContext))]
-    partial class EclipseTaskManagerContextModelSnapshot : ModelSnapshot
+    [Migration("20241203055126_Add_DataDeConclusaoDaTaskParaReport_Tab_ProjectTask")]
+    partial class Add_DataDeConclusaoDaTaskParaReport_Tab_ProjectTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

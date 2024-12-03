@@ -70,6 +70,7 @@
 
 # Put Project Task
 {
+	"projectTaskId": 9
 	"title": "[#4] Servir no Copo",
 	"description": "Servir a vitamina em copos",
 	"creationDate": "2024-12-02T20:25:55.130331",
@@ -81,4 +82,47 @@
 }
 
 
+# Task Comment
+{
+  "comment": "Main um comentario, para testes comentario na task 4",
+  "userId": 5,
+  "projectId": 4,
+  "projectTaskId": 4
+}
+
+# Concluir estas tasks 
+
+{
+    "title": "[#4] Picar banana",
+    "description": "Picar a bananda para fazer a vitamina",
+    "creationDate": "2024-12-02T20:21:06.53282",
+    "dueDate": "2024-12-18T20:14:12.863",
+    "status": 2,
+    "priority": 1,
+    "userId": 5,
+    "projectId": 4
+  }
+  {
+    "title": "[#4] Pegar o leite do armario",
+    "description": "Pegar o leite e abrir",
+    "creationDate": "2024-12-02T20:25:20.331431",
+    "dueDate": "2024-12-18T20:14:12.863",
+    "status": 2,
+    "priority": 1,
+    "userId": 5,
+    "projectId": 4
+  }
+  {
+    "projectTaskId": 6,
+    "title": "[#4] Misturar no liquidificador",
+    "description": "Pegar a banana picada e o leite, e misturar no liquidificador",
+    "creationDate": "2024-12-02T20:25:31.621259",
+    "dueDate": "2024-12-18T20:14:12.863",
+    "status": 2,
+    "priority": 1,
+    "userId": 5,
+    "projectId": 4
+  }
+  
+  
 

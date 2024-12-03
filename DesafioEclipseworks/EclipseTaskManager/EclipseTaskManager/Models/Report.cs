@@ -1,73 +1,68 @@
 ﻿using System.Collections.ObjectModel;
 
-namespace EclipseTaskManager.Models
+namespace EclipseTaskManager.Models;
+
+public class Report
 {
-    public class Report
+
+    public Report()
     {
-
-        public Report()
-        {
-            usersReports = new Collection<ReportUser>();
-        }
-
-        public ICollection<ReportUser> usersReports { get; set; }
-
-
-        public ReportUser allUsersReport 
-        {
-            get
-            {
-                ReportUser allUsers = new ReportUser();
-                foreach (ReportUser user in usersReports)
-                {
-                    // allUsers.tasksInProgress.AddRange(user.tasksInProgress);
-                    // allUsers.tasksInToDo.AddRange(user.tasksInToDo);
-                    allUsers.tasksInDone.AddRange(user.tasksInDone);
-                }
-                return allUsers;
-            }
-        }
-
-        /*
-        public int averageInProgress
-        {
-            get 
-            {
-                if (usersReports.Count != 0) 
-                {
-                    return (int) allUsersReport.tasksInProgress.Count / usersReports.Count;
-                }
-                return 0;
-            }
-        }
-        */
-
-        public int averageDone
-        {
-            get
-            {
-                if (usersReports.Count != 0)
-                {
-                    return (int)allUsersReport.tasksInDone.Count / usersReports.Count;
-                }
-                return 0;
-            }
-        }
-
-        /*
-        public int averageTodo
-        {
-            get
-            {
-                if (usersReports.Count != 0)
-                {
-                    return (int)allUsersReport.tasksInToDo.Count / usersReports.Count;
-                }
-                return 0;
-            }
-        }
-        */
-
-
+        // usersReports = new List<ReportUser>();
+        
     }
+
+    public Dictionary<int, ReportUser> userReports;
+    public List<int> allCompletedTasks
+    {
+        get 
+        {
+            List<int> ids = new List<int>();
+            foreach(var entry in userReports)
+            {
+                ids.AddRange(entry.Value.tasksInDone.ToList());
+            }
+            return ids;
+        }
+    }
+    public int averageDoneByUser
+    {
+        get
+        {
+            if (userReports.Count != 0)
+            {
+                return (int)allCompletedTasks.Count / userReports.Count;
+            }
+            return 0;
+        }
+    }
+
+    // public List<ReportUser> usersReports { get; set; }
+
+    /*
+    public ReportUser allUsersReport 
+    {
+        get
+        {
+            ReportUser allUsers = new ReportUser { tasksInDone = new List<int>() };
+            foreach (ReportUser user in usersReports)
+            {
+                allUsers.tasksInDone.AddRange(user.tasksInDone);
+            }
+            return allUsers;
+        }
+    }
+
+
+    public int averageDone
+    {
+        get
+        {
+            if (usersReports.Count != 0)
+            {
+                return (int)allUsersReport.tasksInDone.Count / usersReports.Count;
+            }
+            return 0;
+        }
+    }
+    */
 }
