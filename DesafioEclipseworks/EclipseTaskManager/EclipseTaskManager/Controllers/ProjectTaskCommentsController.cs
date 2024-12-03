@@ -52,7 +52,6 @@ public class ProjectTaskCommentsController : ControllerBase
             return BadRequest("Invalid comment.");
         }
 
-        // TODO usar async
         var userExists = _context.Users.Any(u  => u.UserId == comment.UserId);
         var projectExists = _context.Projects.Any(p  => p.ProjectId == comment.ProjectId);
         var taskExists = _context.ProjectTasks.Any(t  => t.ProjectTaskId== comment.ProjectTaskId);
@@ -70,6 +69,18 @@ public class ProjectTaskCommentsController : ControllerBase
             return NotFound($"TaskId {comment.ProjectTaskId} not found.");
         }
 
+        // add comment to history
+        _context.ProjectTaskUpdates.Add(new ProjectTaskUpdate
+        {
+            ModifiedField = nameof(comment.Comment),
+            ModificationDate = DateTime.Now,
+            NewFieldValue = comment.Comment,
+            OldFieldValue = string.Empty,
+            ProjectId = comment.ProjectId,
+            ProjectTaskId = comment.ProjectTaskId,
+            UserId = comment.UserId,
+        });
+
         _context.ProjectTaskComments.Add(comment);
         _context.SaveChanges();
 
@@ -85,7 +96,7 @@ public class ProjectTaskCommentsController : ControllerBase
     /// <param name="comment"></param>
     /// <returns></returns>
     [HttpPut]
-    public ActionResult Put(ProjectTaskComment comment)
+    public ActionResult<ProjectTaskComment> Put(ProjectTaskComment comment)
     {
         if (comment is null)
         {
@@ -110,31 +121,46 @@ public class ProjectTaskCommentsController : ControllerBase
             return Conflict($"You cannot change the User the comment is associated with. User ID is {taskComment.UserId}");
         }
 
-        try
+        if (taskComment.Comment != comment.Comment) 
         {
-            _context.Entry(comment).State = EntityState.Modified;
+            try
+            {
+                _context.ProjectTaskUpdates.Add(new ProjectTaskUpdate
+                {
+                    ModifiedField = nameof(comment.Comment),
+                    ModificationDate = DateTime.Now,
+                    NewFieldValue = comment.Comment,
+                    OldFieldValue = taskComment.Comment,
+                    ProjectId = taskComment.ProjectId,
+                    ProjectTaskId = taskComment.ProjectTaskId,
+                    UserId = taskComment.UserId,
+                });
 
-            _context.Entry(taskComment).CurrentValues.SetValues(comment);
-            _context.SaveChanges();
+                // Update the current entity properties
+                _context.Entry(taskComment).CurrentValues.SetValues(comment);
+                _context.SaveChanges();
 
-            return Ok(comment);
+                return Ok(comment);
+            }
+            catch (DbUpdateException ex)
+            {
+                return StatusCode(500, $"Database update failed: {ex.Message}");
+            }
         }
-        catch (DbUpdateException ex)
-        {
-            return StatusCode(500, $"Database update failed: {ex.Message}");
-        }
+
+        return NoContent();
+
+
     }
 
     [HttpDelete("{id:int}")]
     public ActionResult Delete(int id)
     {
-
         var comment = _context.ProjectTaskComments.FirstOrDefault(p => p.ProjectTaskCommentId == id);
         if (comment is null)
         {
             return NotFound($"CommentId {id} not found!");
         }
-
         _context.ProjectTaskComments.Remove(comment);
         _context.SaveChanges();
 

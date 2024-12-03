@@ -24,7 +24,6 @@ namespace EclipseTaskManager.Controllers
             _context = context;
         }
 
-
         /// <summary>
         /// Returns all projects of a given user specified by its user ID.
         /// </summary>

@@ -12,8 +12,6 @@ public class ProjectTask
 {
     public ProjectTask()
     {
-        // Comment = new Collection<ProjectTaskComment>();
-        // Updates = new Collection<ProjectTaskUpdate>();
         Comment = null;
         Updates = null;
     }
@@ -47,6 +45,9 @@ public class ProjectTask
 
     [Required]
     public DateTime DueDate { get; set; }
+
+    [JsonIgnore]
+    public DateTime? ConclusionDate { get; set; }
 
     [Required]
     public ProjectTaskStatus Status { get; set; }

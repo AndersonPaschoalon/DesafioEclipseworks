@@ -108,7 +108,6 @@ public class ProjectTasksController : ControllerBase
         // clean-up the incomming data
         projectTask = cleanupIncommingTask(projectTask, DateTime.Now);
 
-
         // save new project in the database
         try
         {
@@ -143,71 +142,12 @@ public class ProjectTasksController : ControllerBase
         return Ok(projectTask);
     }
 
-    /*
-    [HttpPatch("{id:int}")]
-    public ActionResult PatchTask(int id, [FromBody]  JsonPatchDocument<ProjectTask> patchDoc)
-    {
-        // check if the patch and the task id are valid
-        if (patchDoc == null)
-        {
-            return BadRequest("Invalid patch document.");
-        }
-        var currentTask = _context.ProjectTasks.FirstOrDefault(t => t.ProjectTaskId == id);
-        if (currentTask == null)
-        {
-            return NotFound($"Task {id} not found.");
-        }
 
-        // create a copy of the original task
-        var originalCopy = new ProjectTask
-        {
-            ProjectTaskId = currentTask.ProjectTaskId,
-            CreationDate = currentTask.CreationDate,
-            Description = currentTask.Description,
-            DueDate = currentTask.DueDate,
-            Priority = currentTask.Priority,
-            ProjectId = currentTask.ProjectId,
-            UserId = currentTask.UserId,
-            Status = currentTask.Status,
-            Title = currentTask.Title,
-        };
-
-        // apply changes
-        patchDoc.ApplyTo(currentTask);
-
-        // helper method to detect the changes, and create a dictionary for it
-        var changes = ObjectHelper.DetectChanges(originalCopy, currentTask);
-        if (changes.Count > 0)
-        {
-            var updates = new Collection<ProjectTaskUpdate>();
-            foreach (var change in changes)
-            {
-                updates.Add(new ProjectTaskUpdate {
-                    ModifiedField = change.Key,
-                    ModificationDate = DateTime.Now,
-                    NewFieldValue = change.Value.NewValue,
-                    OldFieldValue = change.Value.OldValue, 
-                    //Project = currentTask.Project,
-                    ProjectId= currentTask.ProjectId,
-                    ProjectTask = currentTask,
-                    ProjectTaskId = currentTask.ProjectId,
-                    //User = currentTask.User,
-                    UserId= currentTask.UserId,
-                });
-            }
-            
-            // update history table
-            _context.ProjectTaskUpdates.AddRange(updates);
-            _context.Entry(currentTask).State = EntityState.Modified;
-            // save changes
-            _context.SaveChanges();
-        }
-
-        return Ok(currentTask);
-    }
-    */
-
-
+    /// <summary>
+    /// It is not allowed to change the project the task is associated with.
+    /// </summary>
+    /// <param name="updatedTask"></param>
+    /// <returns></returns>
     [HttpPut]
     public ActionResult UpdateTask(ProjectTask updatedTask)
     {
@@ -245,6 +185,12 @@ public class ProjectTasksController : ControllerBase
                     ProjectTaskId = currentTask.ProjectTaskId,
                     UserId = currentTask.UserId,
                 });
+            }
+
+            // current task is not concludes, but it is being updated as done
+            if (currentTask.Status != ProjectTask.ProjectTaskStatus.Done && updatedTask.Status == ProjectTask.ProjectTaskStatus.Done)
+            {
+                currentTask.ConclusionDate = DateTime.Now;
             }
 
             // Update the current entity properties
