@@ -12,6 +12,7 @@ public class Report
     }
 
     public Dictionary<int, ReportUser> userReports;
+
     public List<int> allCompletedTasks
     {
         get 
