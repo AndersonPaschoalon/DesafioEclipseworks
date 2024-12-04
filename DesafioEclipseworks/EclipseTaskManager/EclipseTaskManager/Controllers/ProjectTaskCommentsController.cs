@@ -22,8 +22,8 @@ public class ProjectTaskCommentsController : ControllerBase
         _context = context;
     }
 
-    [HttpGet]
-    public ActionResult<IEnumerable<ProjectTaskComment>> Get()
+    [HttpGet("all")]
+    public ActionResult<IEnumerable<ProjectTaskComment>> GetAll()
     {
         var comments = _context.ProjectTaskComments.ToList();
         if (comments is null)
@@ -33,7 +33,7 @@ public class ProjectTaskCommentsController : ControllerBase
         return Ok(comments);
     }
 
-    [HttpGet("id:int", Name = "GetComment")]
+    [HttpGet("{id:int}", Name = "GetComment")]
     public ActionResult<ProjectTaskComment> Get(int id)
     {
         var comment = _context.ProjectTaskComments.FirstOrDefault(p => p.ProjectTaskCommentId == id);

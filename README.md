@@ -184,29 +184,40 @@ A tabela ProjectTasks também possui uma coluna "ConclusionDate" que armazena qua
 
 TODO
 
-##  Rodando a aplicação em um Container Docker
+##  Rodando a aplicação em um Container Docker (Windows)
 
-Aqui assumimos que as dependências do .NET Core e do ASP.NET já estejam instaladas em uma VM Linux. 
-Caso a configuração da VM Linux seja necessária, recomendo esse artigo: https://hbayraktar.medium.com/how-to-dockerize-a-net-8-asp-net-core-web-application-b15f63246535
+Para utilizar o container Docker estamos trabalhando no SO Windows, com os seguintes requisitos:
+- Docker Desktop para Windows;
+- WSL 2 com Ubunto 24.04-LTS
 
-Para se instalar o serviço, primeiramente copiei toda a pasta da solução apra a VM LINUX. Estando na pasta do arquivo de solução "EclipseTaskManager.sln", realizo um cd para a pasta de projeto:
+
+Depois que todas as dependências foram instaladas corretamente, devemos criar a imagem Docker.  
+Partindo do diretório contendo o arquivo de solução (EclipseTaskManager.sln), vamos para o diretório do  projeto:
+
 ```
 cd EclipseTaskManager
 ```
-verifico que o arquivo de projeto "EclipseTaskManager.csproj" e o Dockerfile estão presentes nesta pasta, através de um `ls`.
 
-Em seguida execuot o seguinte comando para criar a imagem Docker:
+Em seguida, criamos a imagem Docker com o seguinte comando:
 
 ```
-docker build -t eclipse-task-manager .
+docker build -t eclipsetaskmanager.image .
 ```
 
-Por fim, executo a imagem Docker utilizando o comando:
-```
-docker run -d -p 8081:80 --name dotnet8_eclipse_task_manager eclipse-task-manager
-```
-O serviço estará presente na porta 8081.
+Por fim, criamos o container Docker com o seguinte comando:
 
+```
+docker run -it --rm -p 18080:8080 --name eclipsetaskmanager.docker eclipsetaskmanager.image
+```
+
+Escolhemos a porta `18080` para acessar o container na maquina local, e a porta 8080 para serutilizada pelo container.
+
+Uma vez rodando o container, podemos testar o acesso ao EclipseTaskManager realizando a listagem de usuários pela url:
+```
+http://localhost:18080/v1/api/Users
+```
+
+TODO: connection
 **IMPORTANTE**: Será necessário se atualizar o arquivo "appsettings.json" para que a aplicação se conecte a base de dados, caso ela não esteja localizada no localhost.
 
 

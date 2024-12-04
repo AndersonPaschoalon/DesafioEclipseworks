@@ -28,7 +28,7 @@ public class UsersController : ControllerBase
     /// Returns the list of all users.
     /// </summary>
     /// <returns></returns>
-    [HttpGet]
+    [HttpGet("all")]
     public ActionResult<IEnumerable<User>> GetAll()
     {
         var users = _context.Users.AsNoTracking().ToList();

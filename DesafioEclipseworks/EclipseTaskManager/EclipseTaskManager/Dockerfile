@@ -1,23 +1,30 @@
-# https://hbayraktar.medium.com/how-to-dockerize-a-net-8-asp-net-core-web-application-b15f63246535
+# Acesse https://aka.ms/customizecontainer para saber como personalizar seu contêiner de depuração e como o Visual Studio usa este Dockerfile para criar suas imagens para uma depuração mais rápida.
 
-# Use .NET 8 SDK to build the application
+# Esta fase é usada durante a execução no VS no modo rápido (Padrão para a configuração de Depuração)
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER $APP_UID
+WORKDIR /app
+EXPOSE 8080
+EXPOSE 8081
+
+
+# Esta fase é usada para compilar o projeto de serviço
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-# Set the working directory
-WORKDIR /app
-# Copy the project files
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["EclipseTaskManager.csproj", "."]
+RUN dotnet restore "./EclipseTaskManager.csproj"
 COPY . .
-# Restore and build the project
-RUN dotnet restore
-RUN dotnet publish -c Release -o out
-# Final stage: run the application using the ASP.NET Core runtime
-FROM mcr.microsoft.com/dotnet/aspnet:8.0
+WORKDIR "/src/."
+RUN dotnet build "./EclipseTaskManager.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+# Esta fase é usada para publicar o projeto de serviço a ser copiado para a fase final
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./EclipseTaskManager.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+
+# Esta fase é usada na produção ou quando executada no VS no modo normal (padrão quando não está usando a configuração de Depuração)
+FROM base AS final
 WORKDIR /app
-COPY --from=build /app/out .
-# Expose port 80 for the application
-EXPOSE 80
-# Set the application to listen on IPv4 only
-ENV ASPNETCORE_URLS=http://0.0.0.0:80
-# Run the application
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "EclipseTaskManager.dll"]
-
-

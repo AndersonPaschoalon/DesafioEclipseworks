@@ -19,11 +19,11 @@ namespace EclipseTaskManager.Controllers
             _context = context;
         }
 
-        [HttpGet("userId:int")]
-        public ActionResult<Report> GetUsersReport(int userId, [FromQuery] int daysPrior = 30)
+        [HttpGet("report")]
+        public ActionResult<Report> GetUsersReport([FromQuery] int id, [FromQuery] int daysPrior = 30)
         {
             // select the user, if the user is not an admin, reject
-            var requestingUser = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == userId);
+            var requestingUser = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == id);
             if (requestingUser == null || requestingUser.Role != Models.User.UserRole.Admin)
             {
                 return Conflict("User is not allowed to request reports.");
@@ -60,9 +60,14 @@ namespace EclipseTaskManager.Controllers
             }
 
             var json = JsonSerializer.Serialize(report);
-            Console.WriteLine("========" +  json);
 
             return Ok(report);
+        }
+
+        [HttpGet("isactive")]
+        public ActionResult GetIsActive() 
+        {
+            return Ok("Service is running.");
         }
     }
 }

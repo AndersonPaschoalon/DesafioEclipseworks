@@ -29,8 +29,8 @@ namespace EclipseTaskManager.Controllers
         /// </summary>
         /// <param name="userId">User Id</param>
         /// <returns>List of projects its user owns</returns>
-        [HttpGet("userId:int")]
-        public ActionResult<IEnumerable<Project>> GetByUser(int userId)
+        [HttpGet("byuser")]
+        public ActionResult<IEnumerable<Project>> GetByUser([FromQuery] int userId)
         {
             // check if the user exists
             var user = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == userId);
@@ -57,7 +57,7 @@ namespace EclipseTaskManager.Controllers
         /// </summary>
         /// <param name="id">Project ID.</param>
         /// <returns>Project</returns>
-        [HttpGet("id:int", Name = "GetProject")]
+        [HttpGet("{id:int}", Name = "GetProject")]
         public ActionResult<Project> GetById(int id)
         {
             var project = _context.Projects.AsNoTracking().FirstOrDefault(p => p.ProjectId == id);

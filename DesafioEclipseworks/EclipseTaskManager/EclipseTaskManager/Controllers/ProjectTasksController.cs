@@ -34,13 +34,13 @@ public class ProjectTasksController : ControllerBase
     /// </summary>
     /// <param name="projectId"></param>
     /// <returns></returns>
-    [HttpGet("projectId:int")]
-    public ActionResult<IEnumerable<ProjectTask>> GetTaskByProject(int projectId)
+    [HttpGet("byproject")]
+    public ActionResult<IEnumerable<ProjectTask>> GetTaskByProject([FromQuery] int id)
     {
-        var projectTasks = _context.ProjectTasks.AsNoTracking().Where(t => t.ProjectId == projectId);
+        var projectTasks = _context.ProjectTasks.AsNoTracking().Where(t => t.ProjectId == id);
         if (projectTasks is null || !projectTasks.Any())
         {
-            return NotFound($"No task found for project {projectId}");
+            return NotFound($"No task found for project {id}");
         }
         return Ok(projectTasks);
     }
@@ -51,7 +51,7 @@ public class ProjectTasksController : ControllerBase
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [HttpGet("id:int", Name = "GetProjectTask")]
+    [HttpGet("{id:int}", Name = "GetProjectTask")]
     public ActionResult<ProjectTask> GetTaskById(int id)
     {
         var projectTask = _context.ProjectTasks.AsNoTracking()
@@ -203,9 +203,6 @@ public class ProjectTasksController : ControllerBase
 
         return Ok(currentTask);
     }
-
-
-
 
     private ProjectTask cleanupIncommingTask(ProjectTask projectTask, DateTime? dt) 
     {
