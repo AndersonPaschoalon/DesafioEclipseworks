@@ -6,68 +6,67 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 
-namespace EclipseTaskManager.Controllers
+namespace EclipseTaskManager.Controllers;
+
+[Route("v1/api/[controller]")]
+[ApiController]
+public class ReportsController : ControllerBase
 {
-    [Route("v1/api/[controller]")]
-    [ApiController]
-    public class ReportsController : ControllerBase
+    private readonly EclipseTaskManagerContext _context;
+
+    public ReportsController(EclipseTaskManagerContext context)
     {
-        private readonly EclipseTaskManagerContext _context;
+        _context = context;
+    }
 
-        public ReportsController(EclipseTaskManagerContext context)
+    [HttpGet("report")]
+    public ActionResult<Report> GetUsersReport([FromQuery] int id, [FromQuery] int daysPrior = 30)
+    {
+        // select the user, if the user is not an admin, reject
+        var requestingUser = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == id);
+        if (requestingUser == null || requestingUser.Role != Models.User.UserRole.Admin)
         {
-            _context = context;
+            return Conflict("User is not allowed to request reports.");
         }
 
-        [HttpGet("report")]
-        public ActionResult<Report> GetUsersReport([FromQuery] int id, [FromQuery] int daysPrior = 30)
+        // query all tasks  filter by conclusion date
+        var daysPriorDateTime = DateTime.Now.AddDays(-daysPrior);
+        var projectTasks = _context.ProjectTasks
+                    .AsNoTracking()
+                    .Where(t => t.Status == ProjectTask.ProjectTaskStatus.Done && t.ConclusionDate >= daysPriorDateTime)
+                    .ToList();
+
+        Report report = new Report();
+        if (projectTasks is not null) 
         {
-            // select the user, if the user is not an admin, reject
-            var requestingUser = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == id);
-            if (requestingUser == null || requestingUser.Role != Models.User.UserRole.Admin)
+            Dictionary<int, ReportUser> dicRU = new Dictionary<int, ReportUser>();
+            foreach (var task in projectTasks) 
             {
-                return Conflict("User is not allowed to request reports.");
-            }
-
-            // query all tasks  filter by conclusion date
-            var daysPriorDateTime = DateTime.Now.AddDays(-daysPrior);
-            var projectTasks = _context.ProjectTasks
-                        .AsNoTracking()
-                        .Where(t => t.Status == ProjectTask.ProjectTaskStatus.Done && t.ConclusionDate >= daysPriorDateTime)
-                        .ToList();
-
-            Report report = new Report();
-            if (projectTasks is not null) 
-            {
-                Dictionary<int, ReportUser> dicRU = new Dictionary<int, ReportUser>();
-                foreach (var task in projectTasks) 
+                if (dicRU.ContainsKey(task.UserId))
                 {
-                    if (dicRU.ContainsKey(task.UserId))
-                    {
-                        dicRU[task.UserId].tasksInDone.Add(task.ProjectTaskId);
-                    }
-                    else
-                    {
-                        ReportUser ru = new ReportUser();
-                        ru.userId = task.UserId;
-                        ru.tasksInDone = new List<int> { task.ProjectTaskId };
-                        dicRU.Add(task.UserId, ru);
-                    }
+                    dicRU[task.UserId].tasksInDone.Add(task.ProjectTaskId);
                 }
-
-                //report.usersReports = dicRU.Values.ToList();
-                report.userReports = dicRU;
+                else
+                {
+                    ReportUser ru = new ReportUser();
+                    ru.userId = task.UserId;
+                    ru.tasksInDone = new List<int> { task.ProjectTaskId };
+                    dicRU.Add(task.UserId, ru);
+                }
             }
 
-            var json = JsonSerializer.Serialize(report);
-
-            return Ok(report);
+            //report.usersReports = dicRU.Values.ToList();
+            report.userReports = dicRU;
         }
 
-        [HttpGet("isactive")]
-        public ActionResult GetIsActive() 
-        {
-            return Ok("Service is running.");
-        }
+        var json = JsonSerializer.Serialize(report);
+
+        return Ok(report);
+    }
+
+    [HttpGet("isactive")]
+    public ActionResult GetIsActive() 
+    {
+        return Ok("Service is running.");
     }
 }

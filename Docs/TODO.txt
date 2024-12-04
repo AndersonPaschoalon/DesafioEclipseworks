@@ -1,5 +1,10 @@
 # Fase 1: API Coding
 
+- nos campos de base de dados usar [MaxLength(value)] para definir o tamano do campo da entidade na base de dados
+- nos objeos de daods utilizar [StringLength(val)]
+- mencionar em melhorias que posso criar arquivos de configuração especificos por ambiente - aula 63
+
+
 ## Requisitos de alto nível
 
 [codificação]

@@ -3,28 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\logging\\customerlogger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\logging\\customerlogger.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\controllers\\userscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\controllers\\projecttaskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\controllers\\projecttaskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\controllers\\projecttaskcommentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\controllers\\projecttaskcommentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\logs\\app.log||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\logs\\app.log||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\controllers\\projectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\controllers\\projectscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\logging\\customloggerprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\logging\\customloggerprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\logging\\customloggerproviderconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\logging\\customloggerproviderconfiguration.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\extensions\\apiexceptionmiddlewareextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\extensions\\apiexceptionmiddlewareextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,84 +42,110 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "UsersController.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\UsersController.cs",
-              "RelativeDocumentMoniker": "EclipseTaskManager\\Controllers\\UsersController.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\UsersController.cs",
-              "RelativeToolTip": "EclipseTaskManager\\Controllers\\UsersController.cs",
-              "ViewState": "AgIAAHIAAAAAAAAAAAAYwB4AAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-04T04:57:19.277Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ProjectTasksController.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectTasksController.cs",
-              "RelativeDocumentMoniker": "EclipseTaskManager\\Controllers\\ProjectTasksController.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectTasksController.cs",
-              "RelativeToolTip": "EclipseTaskManager\\Controllers\\ProjectTasksController.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAADwvyQAAAAQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-04T04:46:19.152Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ReportsController.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ReportsController.cs",
-              "RelativeDocumentMoniker": "EclipseTaskManager\\Controllers\\ReportsController.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ReportsController.cs",
-              "RelativeToolTip": "EclipseTaskManager\\Controllers\\ReportsController.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAC0AAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-04T04:46:19.216Z",
+              "Title": "app.log",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Logs\\app.log",
+              "RelativeDocumentMoniker": "EclipseTaskManager\\Logs\\app.log",
+              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Logs\\app.log",
+              "RelativeToolTip": "EclipseTaskManager\\Logs\\app.log",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAF8SURBVDhPjVNLTgJBEG1lwpoFB3GNK9fieA48hD8iwT/ihwgSDAIHgAGXXsEV18CNzL/LquqZdsYM6kteXqcy3fWqpmpNRBgOhyABBEgpAFVKPIMUcYzUyOU\u002BXM/b2qtU3vkSfRjjZTCAMAw1A2LwzdFoBPP5HNqdzuL27n4juibWI\u002BUshBA1DIkhEx9iEorFotgslQqGYbxxAGFEqt1MxmPWJLbLZdZ\u002Bv89q5PMFPiTR6z2zdaxR0fXA0XTBcVywkb4fwHXjRteecIDNQ7UmExVYAdPcxYaqclN46na5WenMKjtlVnTYwcXlVYaDqImW9beD5N/TeGy32QHXm6hZ03ZgiSQHp2fnWQ4oBmJqWSqwAqZpZjt4aLXAD4J0VqyZsmoubfB8H2r1eoaD6NXZ9HcHO\u002BSA3f4AjifXl8rItOETM8ckB9WTWpYD9RdeZ1PWVWAHWXPQaDb59f/w8LiqHeh1pvGkCaP6qB8yXusoxmuNZ7XmII4O9vGuEF86osuDYRkpYQAAAABJRU5ErkJggg==",
+              "WhenOpened": "2024-12-04T15:41:34.861Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "ProjectTaskCommentsController.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectTaskCommentsController.cs",
-              "RelativeDocumentMoniker": "EclipseTaskManager\\Controllers\\ProjectTaskCommentsController.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectTaskCommentsController.cs",
-              "RelativeToolTip": "EclipseTaskManager\\Controllers\\ProjectTaskCommentsController.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAAAswJIAAABQAAAAAAAAAA==",
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Program.cs",
+              "RelativeDocumentMoniker": "EclipseTaskManager\\Program.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Program.cs",
+              "RelativeToolTip": "EclipseTaskManager\\Program.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAwAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-04T04:53:18.05Z",
+              "WhenOpened": "2024-12-04T15:31:10.616Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ProjectsController.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectsController.cs",
-              "RelativeDocumentMoniker": "EclipseTaskManager\\Controllers\\ProjectsController.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectsController.cs*",
-              "RelativeToolTip": "EclipseTaskManager\\Controllers\\ProjectsController.cs*",
-              "ViewState": "AgIAAJsAAAAAAAAAAAAcwB8AAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-04T04:46:57.274Z",
+              "DocumentIndex": 6,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\appsettings.json",
+              "RelativeDocumentMoniker": "EclipseTaskManager\\appsettings.json",
+              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\appsettings.json",
+              "RelativeToolTip": "EclipseTaskManager\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-12-04T15:25:32.382Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "Dockerfile",
-              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Dockerfile",
-              "RelativeDocumentMoniker": "EclipseTaskManager\\Dockerfile",
-              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Dockerfile",
-              "RelativeToolTip": "EclipseTaskManager\\Dockerfile",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2024-12-04T04:10:08.01Z",
+              "Title": "CustomLoggerProviderConfiguration.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Logging\\CustomLoggerProviderConfiguration.cs",
+              "RelativeDocumentMoniker": "EclipseTaskManager\\Logging\\CustomLoggerProviderConfiguration.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Logging\\CustomLoggerProviderConfiguration.cs",
+              "RelativeToolTip": "EclipseTaskManager\\Logging\\CustomLoggerProviderConfiguration.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-04T15:13:55.813Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CustomerLogger.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Logging\\CustomerLogger.cs",
+              "RelativeDocumentMoniker": "EclipseTaskManager\\Logging\\CustomerLogger.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Logging\\CustomerLogger.cs",
+              "RelativeToolTip": "EclipseTaskManager\\Logging\\CustomerLogger.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAQwDkAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-04T14:59:00.447Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "CustomLoggerProvider.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Logging\\CustomLoggerProvider.cs",
+              "RelativeDocumentMoniker": "EclipseTaskManager\\Logging\\CustomLoggerProvider.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Logging\\CustomLoggerProvider.cs",
+              "RelativeToolTip": "EclipseTaskManager\\Logging\\CustomLoggerProvider.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAoAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-04T14:59:20.154Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "ApiExceptionMiddlewareExtensions.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Extensions\\ApiExceptionMiddlewareExtensions.cs",
+              "RelativeDocumentMoniker": "EclipseTaskManager\\Extensions\\ApiExceptionMiddlewareExtensions.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Extensions\\ApiExceptionMiddlewareExtensions.cs",
+              "RelativeToolTip": "EclipseTaskManager\\Extensions\\ApiExceptionMiddlewareExtensions.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-04T14:55:54.878Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ProjectsController.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectsController.cs",
+              "RelativeDocumentMoniker": "EclipseTaskManager\\Controllers\\ProjectsController.cs",
+              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectsController.cs",
+              "RelativeToolTip": "EclipseTaskManager\\Controllers\\ProjectsController.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAACUAAABFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-04T14:51:41.499Z",
               "EditorCaption": ""
             }
           ]
