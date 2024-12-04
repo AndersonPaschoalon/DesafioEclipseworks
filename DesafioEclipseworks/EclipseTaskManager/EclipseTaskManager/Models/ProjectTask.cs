@@ -12,7 +12,7 @@ public class ProjectTask
 {
     public ProjectTask()
     {
-        Comment = null;
+        Comments = null;
         Updates = null;
     }
 
@@ -80,7 +80,7 @@ public class ProjectTask
 
     //[JsonIgnore]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public ICollection<ProjectTaskComment>? Comment { get; set; }
+    public ICollection<ProjectTaskComment>? Comments { get; set; }
 
     //[JsonIgnore]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

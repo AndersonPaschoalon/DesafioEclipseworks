@@ -56,7 +56,7 @@ public class ProjectTasksController : ControllerBase
     {
         var projectTask = _context.ProjectTasks.AsNoTracking()
                                 .Include(u => u.Updates)
-                                .Include(c => c.Comment)
+                                .Include(c => c.Comments)
                                 .FirstOrDefault(t => t.ProjectTaskId == id);
 
         if (projectTask is null)
@@ -206,7 +206,7 @@ public class ProjectTasksController : ControllerBase
 
     private ProjectTask cleanupIncommingTask(ProjectTask projectTask, DateTime? dt) 
     {
-        projectTask.Comment = null;
+        projectTask.Comments = null;
         projectTask.Updates = null;
         projectTask.CreationDate = dt;
         projectTask.Status = ObjectHelper.CastToEnum((int)projectTask.Status, ProjectTask.ProjectTaskStatus.ToDo);

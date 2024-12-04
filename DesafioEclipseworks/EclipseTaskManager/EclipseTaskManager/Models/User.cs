@@ -17,7 +17,6 @@ public class User
 
     public User()
     {
-        //Projects = new Collection<Project>();
         Name = string.Empty;
     }
 
