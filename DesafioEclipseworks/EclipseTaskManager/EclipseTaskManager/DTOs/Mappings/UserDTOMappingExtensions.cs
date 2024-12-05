@@ -14,7 +14,7 @@ public static class UserDTOMappingExtensions
             UserId = user.UserId,
             Name = user.Name,
             Role = (int)user.Role,
-            RoleStr = user.Role.ToString()
+            //RoleStr = user.Role.ToString()
         };
     }
 
@@ -43,7 +43,7 @@ public static class UserDTOMappingExtensions
             UserId = user.UserId,
             Name = user.Name,
             Role = (int)user.Role,
-            RoleStr = user.Role.ToString()
+            //RoleStr = user.Role.ToString()
         }).ToList();
     }
 }

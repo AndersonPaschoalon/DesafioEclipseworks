@@ -15,5 +15,5 @@ public class UserDTO
     [Range(0, 1, ErrorMessage = "The Role Code must be between 0 and 1")]
     public int Role { get; set; }
 
-    public string RoleStr { get; set; }
+    // public string RoleStr { get; set; }
 }

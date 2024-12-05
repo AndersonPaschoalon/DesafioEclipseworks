@@ -1,6 +1,9 @@
 ﻿using EclipseTaskManager.Context;
 using EclipseTaskManager.Models;
 using EclipseTaskManager.Repository;
+using EclipseTaskManager.DTOs;
+using EclipseTaskManager.DTOs.Mappings;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,35 +41,36 @@ public class ProjectTaskCommentsController : ControllerBase
     }
 
     [HttpGet("all")]
-    public ActionResult<IEnumerable<ProjectTaskComment>> GetAll()
+    public ActionResult<IEnumerable<ProjectTaskCommentDTO>> GetAll()
     {
         var comments = _commentRepository.GetComments();
         if (comments is null)
         {
             return NotFound("No comment found");
         }
-        return Ok(comments);
+        return Ok(comments.ToProjectTaskCommentDTOList());
     }
 
     [HttpGet("{id:int}", Name = "GetComment")]
-    public ActionResult<ProjectTaskComment> Get(int id)
+    public ActionResult<ProjectTaskCommentDTO> Get(int id)
     {
         var comment = _commentRepository.GetComment(id);
         if (comment is null)
         {
             return NotFound($"CommentId {id}");
         }
-        return Ok(comment);
+        return Ok(comment.ToProjectTaskCommentDTO());
 
     }
 
     [HttpPost]
-    public ActionResult Post(ProjectTaskComment comment)
+    public ActionResult<ProjectTaskCommentDTO> Post(ProjectTaskCommentDTO commentDto)
     {
-        if (comment is null)
+        if (commentDto is null)
         {
             return BadRequest("Invalid comment.");
         }
+        var comment = commentDto.ToProjectTaskComment();
 
         // validate user: user must exist
         var user = _userRepository.GetUser(comment.UserId);
@@ -110,7 +114,7 @@ public class ProjectTaskCommentsController : ControllerBase
         _commentRepository.Create(comment);
         _updateRepository.Create(historyEntry);
 
-        return new CreatedAtRouteResult("GetComment", new { id = comment.ProjectTaskCommentId }, comment);
+        return new CreatedAtRouteResult("GetComment", new { id = comment.ProjectTaskCommentId }, comment.ToProjectTaskCommentDTO());
     }
 
     /// <summary>
@@ -122,12 +126,13 @@ public class ProjectTaskCommentsController : ControllerBase
     /// <param name="comment"></param>
     /// <returns></returns>
     [HttpPut]
-    public ActionResult<ProjectTaskComment> Put(ProjectTaskComment comment)
+    public ActionResult<ProjectTaskCommentDTO> Put(ProjectTaskCommentDTO commentDto)
     {
-        if (comment is null)
+        if (commentDto is null)
         {
             return BadRequest("Invalid comment.");
         }
+        var comment = commentDto.ToProjectTaskComment();
 
         var taskComment = _commentRepository.GetComment(comment.ProjectTaskCommentId);
         if (taskComment == null)
@@ -166,7 +171,7 @@ public class ProjectTaskCommentsController : ControllerBase
                 _commentRepository.Update(comment);
                 _updateRepository.Create(historyEntry);
 
-                return Ok(comment);
+                return Ok(comment.ToProjectTaskCommentDTO());
             }
             catch (DbUpdateException ex)
             {
@@ -178,7 +183,7 @@ public class ProjectTaskCommentsController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    public ActionResult Delete(int id)
+    public ActionResult<ProjectTaskCommentDTO> Delete(int id)
     {
         var comment = _commentRepository.GetComment(id);
         if (comment is null)
@@ -186,7 +191,7 @@ public class ProjectTaskCommentsController : ControllerBase
             return NotFound($"CommentId {id} not found!");
         }
         _commentRepository.Delete(id);
-        return Ok(comment);
+        return Ok(comment.ToProjectTaskCommentDTO());
     }
 
 

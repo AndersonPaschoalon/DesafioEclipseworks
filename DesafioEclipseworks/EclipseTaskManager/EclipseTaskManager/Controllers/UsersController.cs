@@ -2,6 +2,9 @@
 using EclipseTaskManager.Models;
 using EclipseTaskManager.Repository;
 using EclipseTaskManager.Utils;
+using EclipseTaskManager.DTOs;
+using EclipseTaskManager.DTOs.Mappings;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -36,14 +39,14 @@ public class UsersController : ControllerBase
     /// </summary>
     /// <returns></returns>
     [HttpGet("all")]
-    public ActionResult<IEnumerable<User>> GetAll()
+    public ActionResult<IEnumerable<UserDTO>> GetAll()
     {
         var users = _userRepository.GetUsers();
         if (users == null || !users.Any())
         {
             return NotFound("No users found.");
         }
-        return Ok(users);
+        return Ok(users.ToUserDTOList());
     }
 
     /// <summary>
@@ -52,14 +55,14 @@ public class UsersController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id:int}", Name = "GetUser")]
-    public ActionResult<User> Get(int id)
+    public ActionResult<UserDTO> Get(int id)
     {
         var user = _userRepository.GetUser(id);
         if (user == null)
         {
             return NotFound($"UserId {id} not found.");
         }
-        return Ok(user);
+        return Ok(user.ToUserDTO());
     }
 
     /// <summary>
@@ -69,18 +72,18 @@ public class UsersController : ControllerBase
     /// <param name="user"></param>
     /// <returns></returns>
     [HttpPost]
-    public ActionResult Post(User user)
+    public ActionResult<UserDTO> Post(UserDTO userDto)
     {
-        if (user == null)
+        if (userDto == null)
         {
             return BadRequest("Invalid user data.");
         }
-       
+        var user = userDto.ToUser();
         user.Role = ObjectHelper.CastToEnum((int)user.Role, Models.User.UserRole.Consumer);
         try
         {
             _userRepository.Create(user);
-            return CreatedAtRoute("GetUser", new { id = user.UserId }, user);
+            return CreatedAtRoute("GetUser", new { id = user.UserId }, user.ToUserDTO());
         }
         catch (DbUpdateException ex)
         {
@@ -96,19 +99,19 @@ public class UsersController : ControllerBase
     /// <param name="user">User to be updated.</param>
     /// <returns></returns>
     [HttpPut]
-    public ActionResult<User> Put(User user)
+    public ActionResult<UserDTO> Put(UserDTO userDto)
     {
         // check if the user parameter data is ok
-        if (user == null)
+        if (userDto == null)
         {
             return BadRequest("Invalid user data.");
         }
-
+        var user = userDto.ToUser();
         // update the user
         try
         {
             _userRepository.Update(user);
-            return Ok(user);
+            return Ok(user.ToUserDTO());
         }
         catch (DbUpdateException ex)
         {
@@ -122,7 +125,7 @@ public class UsersController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id:int}")]
-    public ActionResult Delete(int id)
+    public ActionResult<UserDTO> Delete(int id)
     {
         var user = _userRepository.GetUser(id);
         if (user == null)
@@ -141,7 +144,7 @@ public class UsersController : ControllerBase
         try
         {
             _userRepository.Delete(id);
-            return Ok(user);
+            return Ok(user.ToUserDTO());
         }
         catch (DbUpdateException ex)
         {

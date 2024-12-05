@@ -1,8 +1,8 @@
-﻿using EclipseTaskManager.DTOs;
+﻿namespace EclipseTaskManager.Unit.DTOsTests;
+
+using EclipseTaskManager.DTOs;
 using EclipseTaskManager.Models;
 using EclipseTaskManager.DTOs.Mappings;
-
-namespace EclipseTaskManager.Unit;
 
 
 [TestFixture]
@@ -27,7 +27,6 @@ public class UserDTOMappingTests
         Assert.AreEqual(user.UserId, userDTO.UserId);
         Assert.AreEqual(user.Name, userDTO.Name);
         Assert.AreEqual((int)user.Role, userDTO.Role);
-        Assert.AreEqual(user.Role.ToString(), userDTO.RoleStr);
     }
 
     [Test]

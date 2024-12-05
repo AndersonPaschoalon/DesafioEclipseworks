@@ -1,6 +1,9 @@
 ﻿using EclipseTaskManager.Context;
 using EclipseTaskManager.Models;
 using EclipseTaskManager.Repository;
+using EclipseTaskManager.DTOs;
+using EclipseTaskManager.DTOs.Mappings;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +34,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet("all")]
-    public ActionResult<IEnumerable<Project>> GetAll()
+    public ActionResult<IEnumerable<ProjectDTO>> GetAll()
     {
         // retrive the user projects
         var projects = _projectRepository.GetProjects();
@@ -40,7 +43,7 @@ public class ProjectsController : ControllerBase
             return NotFound($"No project found.");
         }
 
-        return Ok(projects);
+        return Ok(projects.ToProjectDTOList());
 
     }
 
@@ -50,7 +53,7 @@ public class ProjectsController : ControllerBase
     /// <param name="userId">User Id</param>
     /// <returns>List of projects its user owns</returns>
     [HttpGet("byuser")]
-    public ActionResult<IEnumerable<Project>> GetByUser([FromQuery] int userId)
+    public ActionResult<IEnumerable<ProjectDTO>> GetByUser([FromQuery] int userId)
     {
         _logger.LogInformation($"===================GET:ProjectsController:GetByUser:userId={userId}===================");
 
@@ -68,7 +71,7 @@ public class ProjectsController : ControllerBase
             return NotFound($"No project found for user {userId}");
         }
 
-        return Ok(projects);
+        return Ok(projects.ToProjectDTOList());
 
     }
 
@@ -78,14 +81,14 @@ public class ProjectsController : ControllerBase
     /// <param name="id">Project ID.</param>
     /// <returns>Project</returns>
     [HttpGet("{id:int}", Name = "GetProject")]
-    public ActionResult<Project> GetById(int id)
+    public ActionResult<ProjectDTO> GetById(int id)
     {
         var project = _projectRepository.GetProject(id);
         if (project is null)
         {
             return NotFound($"No Project found for ID {id}");
         }
-        return Ok(project);
+        return Ok(project.ToProjectDTO());
     }
 
     /// <summary>
@@ -94,13 +97,14 @@ public class ProjectsController : ControllerBase
     /// <param name="project"></param>
     /// <returns></returns>
     [HttpPost]
-    public ActionResult Post(Project project)
+    public ActionResult<ProjectDTO> Post(ProjectDTO projectDto)
     {
         // check project format
-        if (project is null)
+        if (projectDto is null)
         {
             return BadRequest("Invalid Project.");
         }
+        var project = projectDto.ToProject();
 
         // check user id
         int userId = project.UserId;
@@ -114,7 +118,7 @@ public class ProjectsController : ControllerBase
         try
         {
             _projectRepository.Create(project);
-            return new CreatedAtRouteResult("GetProject", new { id = project.ProjectId }, project);
+            return new CreatedAtRouteResult("GetProject", new { id = project.ProjectId }, project.ToProjectDTO());
         }
         catch (DbUpdateException ex)
         {
@@ -128,13 +132,14 @@ public class ProjectsController : ControllerBase
     /// <param name="project"></param>
     /// <returns></returns>
     [HttpPut]
-    public ActionResult Put(Project project)
+    public ActionResult<ProjectDTO> Put(ProjectDTO projectDto)
     {
         // check project format
-        if (project is null)
+        if (projectDto is null)
         {
             return BadRequest("Invalid Project.");
         }
+        var project = projectDto.ToProject();
 
         // validation: project and user must exist.
         var currProj = _projectRepository.GetProject(project.ProjectId);
@@ -152,7 +157,7 @@ public class ProjectsController : ControllerBase
         try
         {
             _projectRepository.Update(project);
-            return Ok(project);
+            return Ok(project.ToProjectDTO());
         }
         catch (DbUpdateException ex)
         {
@@ -166,7 +171,7 @@ public class ProjectsController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id:int}")]
-    public ActionResult Delete(int id)
+    public ActionResult<ProjectDTO> Delete(int id)
     {
         var project = _projectRepository.GetProject(id);
         // check if the project exists
@@ -182,7 +187,7 @@ public class ProjectsController : ControllerBase
         }
 
         _projectRepository.Delete(id);
-        return Ok(project);
+        return Ok(project.ToProjectDTO());
     }
 
 

@@ -2,6 +2,9 @@
 using EclipseTaskManager.Models;
 using EclipseTaskManager.Repository;
 using EclipseTaskManager.Utils;
+using EclipseTaskManager.DTOs;
+using EclipseTaskManager.DTOs.Mappings;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -49,14 +52,14 @@ public class ProjectTasksController : ControllerBase
     /// <param name="projectId"></param>
     /// <returns></returns>
     [HttpGet("all")]
-    public ActionResult<IEnumerable<ProjectTask>> GetAllTasks()
+    public ActionResult<IEnumerable<ProjectTaskDTO>> GetAllTasks()
     {
         var projectTasks = _taskRepository.GetTasks();
         if (projectTasks is null || !projectTasks.Any())
         {
             return NotFound($"No task found.");
         }
-        return Ok(projectTasks);
+        return Ok(projectTasks.ToProjectTaskDTOList());
     }
 
     /// <summary>
@@ -65,7 +68,7 @@ public class ProjectTasksController : ControllerBase
     /// <param name="projectId"></param>
     /// <returns></returns>
     [HttpGet("byproject")]
-    public ActionResult<IEnumerable<ProjectTask>> GetTaskByProject([FromQuery] int id)
+    public ActionResult<IEnumerable<ProjectTaskDTO>> GetTaskByProject([FromQuery] int id)
     {
         var projectTasks = _taskRepository.GetTasks();
         if (projectTasks is null || !projectTasks.Any())
@@ -77,7 +80,7 @@ public class ProjectTasksController : ControllerBase
         {
             return NotFound($"No task found for project {id}");
         }
-        return Ok(projectTasks);
+        return Ok(projectTasks.ToProjectTaskDTOList());
     }
 
     /// <summary>
@@ -86,7 +89,7 @@ public class ProjectTasksController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id:int}", Name = "GetProjectTask")]
-    public ActionResult<ProjectTask> GetTaskById(int id)
+    public ActionResult<ProjectTaskDTOFull> GetTaskById(int id)
     {
         var projectTask = _taskRepository.GetTask(id);
         if (projectTask is null)
@@ -94,7 +97,7 @@ public class ProjectTasksController : ControllerBase
             return NotFound($"No task found for id {id}");
         }
 
-        return Ok(projectTask);
+        return Ok(projectTask.ToProjectTaskDTOFull());
     }
 
     /// <summary>
@@ -103,13 +106,14 @@ public class ProjectTasksController : ControllerBase
     /// <param name="projectTask"></param>
     /// <returns></returns>
     [HttpPost]
-    public ActionResult PostTask(ProjectTask projectTask)
+    public ActionResult<ProjectTaskDTO> PostTask(ProjectTaskDTO projectTaskDto)
     {
         // validade/check the project before creating task
-        if (projectTask is null)
+        if (projectTaskDto is null)
         {
             return BadRequest("Invalid Project.");
         }
+        var projectTask = projectTaskDto.ToProjectTask();
 
         // project must exist
         var project = _projectRepository.GetProject(projectTask.ProjectId);
@@ -138,7 +142,7 @@ public class ProjectTasksController : ControllerBase
         try
         {
             _taskRepository.Create(projectTask);
-            return new CreatedAtRouteResult("GetProjectTask", new { id = projectTask.ProjectTaskId }, projectTask);
+            return new CreatedAtRouteResult("GetProjectTask", new { id = projectTask.ProjectTaskId }, projectTask.ToProjectTaskDTO());
         }
         catch (DbUpdateException ex)
         {
@@ -153,12 +157,15 @@ public class ProjectTasksController : ControllerBase
     /// <param name="updatedTask"></param>
     /// <returns></returns>
     [HttpPut]
-    public ActionResult UpdateTask(ProjectTask updatedTask)
+    public ActionResult<ProjectTaskDTO> UpdateTask(ProjectTaskDTO updatedTaskDto)
     {
-        if (updatedTask == null)
+        if (updatedTaskDto == null)
         {
             return BadRequest("Invalid update payload.");
         }
+        var updatedTask = updatedTaskDto.ToProjectTask();
+
+
         // check the data
         var user = _userRepository.GetUser(updatedTask.UserId);
         if (user is null)
@@ -220,7 +227,7 @@ public class ProjectTasksController : ControllerBase
             _taskRepository.Update(updatedTask);
         }
 
-        return new CreatedAtRouteResult("GetProjectTask", new { id = updatedTask.ProjectTaskId }, updatedTask);
+        return new CreatedAtRouteResult("GetProjectTask", new { id = updatedTask.ProjectTaskId }, updatedTask.ToProjectTaskDTO());
     }
 
     /// <summary>
@@ -229,7 +236,7 @@ public class ProjectTasksController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpDelete("{id:int}")]
-    public ActionResult DeleteTask(int id)
+    public ActionResult<ProjectTaskDTO> DeleteTask(int id)
     {
         var projectTask = _taskRepository.GetTask(id);
         if (projectTask is null)
@@ -248,7 +255,7 @@ public class ProjectTasksController : ControllerBase
         }
         // updates history will be kept
 
-        return Ok(projectTask);
+        return Ok(projectTask.ToProjectTaskDTO());
     }
 
     private ProjectTask cleanupIncommingTask(ProjectTask projectTask, DateTime? dt) 
