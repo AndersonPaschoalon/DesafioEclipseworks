@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\controllers\\projecttaskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\controllers\\projecttaskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\models\\projecttask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\models\\projecttask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\controllers\\projecttaskcommentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\controllers\\projecttaskcommentscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -22,10 +30,6 @@
       "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\controllers\\reportscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\controllers\\projecttaskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\controllers\\projecttaskscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\repository\\projecttaskupdaterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\repository\\projecttaskupdaterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -36,10 +40,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\models\\projecttaskupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\models\\projecttaskupdate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\models\\projecttask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|solutionrelative:eclipsetaskmanager\\models\\projecttask.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{371D13F0-0F5B-491F-84E9-12F44AD202E6}|EclipseTaskManager\\EclipseTaskManager.csproj|c:\\users\\usuario\\workspace\\study\\desafioeclipseworks\\desafioeclipseworks\\eclipsetaskmanager\\eclipsetaskmanager\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -53,11 +53,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "ProjectTaskCommentsController.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\AppData\\Local\\SourceServer\\2cd8cc1d26d30fba8972f9507dc0e0b2e39b3b7ebb4990ce9f3f81bdbc4d9c4e\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectTaskCommentsController.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppData\\Local\\SourceServer\\2cd8cc1d26d30fba8972f9507dc0e0b2e39b3b7ebb4990ce9f3f81bdbc4d9c4e\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectTaskCommentsController.cs",
@@ -70,7 +70,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "ProjectsController.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectsController.cs",
               "RelativeDocumentMoniker": "EclipseTaskManager\\Controllers\\ProjectsController.cs",
@@ -83,7 +83,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "ProjectTaskUpdate.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Models\\ProjectTaskUpdate.cs",
               "RelativeDocumentMoniker": "EclipseTaskManager\\Models\\ProjectTaskUpdate.cs",
@@ -96,33 +96,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 1,
               "Title": "ProjectTask.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Models\\ProjectTask.cs",
               "RelativeDocumentMoniker": "EclipseTaskManager\\Models\\ProjectTask.cs",
               "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Models\\ProjectTask.cs",
               "RelativeToolTip": "EclipseTaskManager\\Models\\ProjectTask.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAD4vyEAAAAfAAAAAAAAAA==",
+              "ViewState": "AgIAABkAAAAAAAAAAAAEwCEAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-05T00:26:47.959Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 0,
               "Title": "ProjectTasksController.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectTasksController.cs",
               "RelativeDocumentMoniker": "EclipseTaskManager\\Controllers\\ProjectTasksController.cs",
               "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectTasksController.cs",
               "RelativeToolTip": "EclipseTaskManager\\Controllers\\ProjectTasksController.cs",
-              "ViewState": "AgIAAMwAAAAAAAAAAAAMwM8AAAAQAAAAAAAAAA==",
+              "ViewState": "AgIAAOQAAAAAAAAAAAAMwM8AAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-04T23:44:02.635Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "ReportsController.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ReportsController.cs",
               "RelativeDocumentMoniker": "EclipseTaskManager\\Controllers\\ReportsController.cs",
@@ -135,20 +135,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "ProjectTaskCommentsController.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectTaskCommentsController.cs",
               "RelativeDocumentMoniker": "EclipseTaskManager\\Controllers\\ProjectTaskCommentsController.cs",
-              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectTaskCommentsController.cs*",
-              "RelativeToolTip": "EclipseTaskManager\\Controllers\\ProjectTaskCommentsController.cs*",
-              "ViewState": "AgIAAEgAAAAAAAAAAAAEwFkAAAA7AAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Controllers\\ProjectTaskCommentsController.cs",
+              "RelativeToolTip": "EclipseTaskManager\\Controllers\\ProjectTaskCommentsController.cs",
+              "ViewState": "AgIAAEgAAAAAAAAAAAAEwGEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-04T23:50:13.315Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "ProjectTaskComment.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Models\\ProjectTaskComment.cs",
               "RelativeDocumentMoniker": "EclipseTaskManager\\Models\\ProjectTaskComment.cs",
@@ -161,7 +161,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "ProjectTaskUpdateRepository.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Repository\\ProjectTaskUpdateRepository.cs",
               "RelativeDocumentMoniker": "EclipseTaskManager\\Repository\\ProjectTaskUpdateRepository.cs",
@@ -174,7 +174,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "IProjectTaskUpdateRepository.cs",
               "DocumentMoniker": "C:\\Users\\Usuario\\Workspace\\Study\\DesafioEclipseworks\\DesafioEclipseworks\\EclipseTaskManager\\EclipseTaskManager\\Repository\\IProjectTaskUpdateRepository.cs",
               "RelativeDocumentMoniker": "EclipseTaskManager\\Repository\\IProjectTaskUpdateRepository.cs",
