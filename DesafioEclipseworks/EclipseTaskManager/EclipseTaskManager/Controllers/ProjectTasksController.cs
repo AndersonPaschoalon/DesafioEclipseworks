@@ -1,6 +1,10 @@
 ﻿using EclipseTaskManager.Context;
 using EclipseTaskManager.Models;
+using EclipseTaskManager.Repository;
 using EclipseTaskManager.Utils;
+using EclipseTaskManager.DTOs;
+using EclipseTaskManager.DTOs.Mappings;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -19,15 +23,44 @@ public class ProjectTasksController : ControllerBase
     // ActionResult Post(ProjectTask projectTask)
     // ActionResult Delete(int id)
 
-
-    private readonly EclipseTaskManagerContext _context;
+    private readonly IUserRepository _userRepository;
+    private readonly IProjectRepository _projectRepository;
+    private readonly IProjectTaskRepository _taskRepository;
+    private readonly IProjectTaskCommentRepository _commentRepository;
+    private readonly IProjectTaskUpdateRepository _updateRepository;
+    private readonly ILogger _logger;
     private readonly int MaxTaskByProject = 20;
 
-    public ProjectTasksController(EclipseTaskManagerContext context)
+    public ProjectTasksController(IUserRepository userRepository,
+                                  IProjectRepository projectRepository,
+                                  IProjectTaskRepository taskRepository,
+                                  IProjectTaskCommentRepository commentRepository,
+                                  IProjectTaskUpdateRepository updateRepository,
+                                  ILogger<ProjectTasksController> logger)
     {
-        _context = context;
+        _userRepository = userRepository;
+        _projectRepository = projectRepository;
+        _taskRepository = taskRepository;
+        _commentRepository = commentRepository;
+        _updateRepository = updateRepository;
+        _logger = logger;
     }
 
+    /// <summary>
+    /// Lists all the tasks of a given project.
+    /// </summary>
+    /// <param name="projectId"></param>
+    /// <returns></returns>
+    [HttpGet("all")]
+    public ActionResult<IEnumerable<ProjectTaskDTO>> GetAllTasks()
+    {
+        var projectTasks = _taskRepository.GetTasks();
+        if (projectTasks is null || !projectTasks.Any())
+        {
+            return NotFound($"No task found.");
+        }
+        return Ok(projectTasks.ToProjectTaskDTOList());
+    }
 
     /// <summary>
     /// Lists all the tasks of a given project.
@@ -35,16 +68,20 @@ public class ProjectTasksController : ControllerBase
     /// <param name="projectId"></param>
     /// <returns></returns>
     [HttpGet("byproject")]
-    public ActionResult<IEnumerable<ProjectTask>> GetTaskByProject([FromQuery] int id)
+    public ActionResult<IEnumerable<ProjectTaskDTO>> GetTaskByProject([FromQuery] int id)
     {
-        var projectTasks = _context.ProjectTasks.AsNoTracking().Where(t => t.ProjectId == id);
+        var projectTasks = _taskRepository.GetTasks();
+        if (projectTasks is null || !projectTasks.Any())
+        {
+            return NotFound($"No task found.");
+        }
+        projectTasks = projectTasks.Where(t => t.ProjectId == id);
         if (projectTasks is null || !projectTasks.Any())
         {
             return NotFound($"No task found for project {id}");
         }
-        return Ok(projectTasks);
+        return Ok(projectTasks.ToProjectTaskDTOList());
     }
-
 
     /// <summary>
     /// Returns a given task given by its id.
@@ -52,21 +89,16 @@ public class ProjectTasksController : ControllerBase
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id:int}", Name = "GetProjectTask")]
-    public ActionResult<ProjectTask> GetTaskById(int id)
+    public ActionResult<ProjectTaskDTOFull> GetTaskById(int id)
     {
-        var projectTask = _context.ProjectTasks.AsNoTracking()
-                                .Include(u => u.Updates)
-                                .Include(c => c.Comment)
-                                .FirstOrDefault(t => t.ProjectTaskId == id);
-
+        var projectTask = _taskRepository.GetTask(id);
         if (projectTask is null)
         {
             return NotFound($"No task found for id {id}");
         }
 
-        return Ok(projectTask);
+        return Ok(projectTask.ToProjectTaskDTOFull());
     }
-
 
     /// <summary>
     /// Create a new task.
@@ -74,35 +106,33 @@ public class ProjectTasksController : ControllerBase
     /// <param name="projectTask"></param>
     /// <returns></returns>
     [HttpPost]
-    public ActionResult PostTask(ProjectTask projectTask)
+    public ActionResult<ProjectTaskDTO> PostTask(ProjectTaskDTO projectTaskDto)
     {
         // validade/check the project before creating task
-        if (projectTask is null)
+        if (projectTaskDto is null)
         {
             return BadRequest("Invalid Project.");
         }
-        var project = _context.Projects.AsNoTracking()
-            .Include(p => p.ProjectTasks)
-            .FirstOrDefault(p => p.ProjectId == projectTask.ProjectId);
+        var projectTask = projectTaskDto.ToProjectTask();
+
+        // project must exist
+        var project = _projectRepository.GetProject(projectTask.ProjectId);
         if (project == null)
         {
             return NotFound($"Project ID {projectTask.ProjectId} not found.");
         }
 
-        var user = _context.Users.AsNoTracking()
-            .FirstOrDefault(u => u.UserId == projectTask.UserId);
+        // user must exist
+        var user = _userRepository.GetUser(projectTask.UserId);
         if (user == null)
         {
             return NotFound($"User ID {projectTask.UserId} not found.");
         }
 
-        if (project.ProjectTasks == null)
+        // the number of tasks must be samaller than MaxTaskByProject
+        if (project.ProjectTasks != null && project.ProjectTasks.Count >= MaxTaskByProject)
         {
-            project.ProjectTasks = new Collection<ProjectTask>();
-        }
-        if (project.ProjectTasks.Count >= MaxTaskByProject)
-        {
-            return Forbid($"The limit of {MaxTaskByProject} has been rechead. Delete another task to proceed.");
+            return Conflict($"The limit of {MaxTaskByProject} has been rechead. Delete another task to proceed.");
         }
 
         // clean-up the incomming data
@@ -111,35 +141,13 @@ public class ProjectTasksController : ControllerBase
         // save new project in the database
         try
         {
-            _context.ProjectTasks.Add(projectTask);
-            _context.SaveChanges();
-            return new CreatedAtRouteResult("GetProjectTask", new { id = projectTask.ProjectTaskId }, projectTask);
+            _taskRepository.Create(projectTask);
+            return new CreatedAtRouteResult("GetProjectTask", new { id = projectTask.ProjectTaskId }, projectTask.ToProjectTaskDTO());
         }
         catch (DbUpdateException ex)
         {
             return StatusCode(500, $"Database update failed: {ex.Message}");
         }
-    }
-
-    /// <summary>
-    /// Delete a task.
-    /// </summary>
-    /// <param name="id"></param>
-    /// <returns></returns>
-    [HttpDelete("{id:int}")]
-    public ActionResult DeleteTask(int id)
-    {
-
-        var projectTask = _context.ProjectTasks.FirstOrDefault(p => p.ProjectTaskId == id);
-        if (projectTask is null)
-        {
-            return NotFound($"Project task {projectTask} not found.");
-        }
-
-        _context.ProjectTasks.Remove(projectTask);
-        _context.SaveChanges();
-
-        return Ok(projectTask);
     }
 
 
@@ -149,33 +157,52 @@ public class ProjectTasksController : ControllerBase
     /// <param name="updatedTask"></param>
     /// <returns></returns>
     [HttpPut]
-    public ActionResult UpdateTask(ProjectTask updatedTask)
+    public ActionResult<ProjectTaskDTO> UpdateTask(ProjectTaskDTO updatedTaskDto)
     {
-        if (updatedTask == null)
+        if (updatedTaskDto == null)
         {
             return BadRequest("Invalid update payload.");
         }
+        var updatedTask = updatedTaskDto.ToProjectTask();
+
+
+        // check the data
+        var user = _userRepository.GetUser(updatedTask.UserId);
+        if (user is null)
+        {
+            return BadRequest($"Invalid user ID {updatedTask.UserId}");
+        }
+        var project = _projectRepository.GetProject(updatedTask.ProjectId);
+        if (project is null)
+        {
+            return BadRequest($"Invalid project ID {updatedTask.ProjectId}");
+        }
 
         // Retrieve the current entity from the database
-        var currentTask = _context.ProjectTasks.FirstOrDefault(t => t.ProjectTaskId == updatedTask.ProjectTaskId);
+        var currentTask = _taskRepository.GetTask(updatedTask.ProjectTaskId);
         if (currentTask == null)
         {
             return NotFound($"Task with ID {updatedTask.ProjectTaskId} not found.");
         }
-        if(currentTask.ProjectId != updatedTask.ProjectId)
+
+        // cannot change the task's project
+        if (currentTask.ProjectId != updatedTask.ProjectId)
         {
             return Conflict($"You are not allowed to change the Project the Task is associated with. Project ID is {currentTask.ProjectId}");
         }
-        // but, you may change the user associated with the task.
+        // but, you may change the user associated with the task.... no validation for this
 
 
-        // Detect changes between the current task and the updated task
+        // Detect changes between the current task and the updated task.. 
+        // the objects must be cleaned up for a propper comparision. Creation date cannot be changed and inner objects should not be compared
+        currentTask = cleanupIncommingTask(currentTask, currentTask.CreationDate);
+        updatedTask = cleanupIncommingTask(updatedTask, currentTask.CreationDate); 
         var changes = ObjectHelper.DetectChanges(currentTask, updatedTask);
         if (changes.Count > 0)
         {
             foreach (var change in changes)
             {
-                _context.ProjectTaskUpdates.Add(new ProjectTaskUpdate
+                var historyEntry = new ProjectTaskUpdate
                 {
                     ModifiedField = change.Key,
                     ModificationDate = DateTime.Now,
@@ -184,10 +211,12 @@ public class ProjectTasksController : ControllerBase
                     ProjectId = currentTask.ProjectId,
                     ProjectTaskId = currentTask.ProjectTaskId,
                     UserId = currentTask.UserId,
-                });
+                };
+                _updateRepository.Create(historyEntry);
             }
 
-            // current task is not concludes, but it is being updated as done
+            // current task is not already concluded and being updated as done
+            // we must track how long ago it was set to done!
             if (currentTask.Status != ProjectTask.ProjectTaskStatus.Done && updatedTask.Status == ProjectTask.ProjectTaskStatus.Done)
             {
                 updatedTask.ConclusionDate = DateTime.Now;
@@ -195,18 +224,45 @@ public class ProjectTasksController : ControllerBase
 
 
             // Update the current entity properties
-            _context.Entry(currentTask).CurrentValues.SetValues(updatedTask);
-
-            // Save all changes
-            _context.SaveChanges();
+            _taskRepository.Update(updatedTask);
         }
 
-        return Ok(currentTask);
+        return new CreatedAtRouteResult("GetProjectTask", new { id = updatedTask.ProjectTaskId }, updatedTask.ToProjectTaskDTO());
+    }
+
+    /// <summary>
+    /// Delete a task.
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
+    [HttpDelete("{id:int}")]
+    public ActionResult<ProjectTaskDTO> DeleteTask(int id)
+    {
+        var projectTask = _taskRepository.GetTask(id);
+        if (projectTask is null)
+        {
+            return NotFound($"Project task {projectTask} not found.");
+        }
+
+        // delete task
+        _taskRepository.Delete(id);
+
+        // delete all tcomments related with task
+        var comments = _commentRepository.GetComments().Where(c => c.ProjectTaskId == id);
+        foreach (var c in comments)
+        {
+            _commentRepository.Delete(c.ProjectTaskCommentId);
+        }
+        // updates history will be kept
+
+        return Ok(projectTask.ToProjectTaskDTO());
     }
 
     private ProjectTask cleanupIncommingTask(ProjectTask projectTask, DateTime? dt) 
     {
-        projectTask.Comment = null;
+        projectTask.User = null;
+        projectTask.Project = null;
+        projectTask.Comments = null;
         projectTask.Updates = null;
         projectTask.CreationDate = dt;
         projectTask.Status = ObjectHelper.CastToEnum((int)projectTask.Status, ProjectTask.ProjectTaskStatus.ToDo);

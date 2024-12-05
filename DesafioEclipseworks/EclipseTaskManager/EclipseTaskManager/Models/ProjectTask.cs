@@ -12,8 +12,8 @@ public class ProjectTask
 {
     public ProjectTask()
     {
-        Comment = null;
-        Updates = null;
+        Comments = new Collection<ProjectTaskComment>();
+        Updates = new Collection<ProjectTaskUpdate>();
     }
 
     public enum ProjectTaskStatus
@@ -33,11 +33,11 @@ public class ProjectTask
     [Key]
     public int ProjectTaskId { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "You must provide a title")]
     [StringLength(DbConsts.STR_MEDIUM)]
     public string Title { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "You must provide a description")]
     [StringLength(DbConsts.STR_BIG)]
     public string Description { get; set; }
 
@@ -49,12 +49,14 @@ public class ProjectTask
     [JsonIgnore]
     public DateTime? ConclusionDate { get; set; }
 
-    [Required]
+    [Required(ErrorMessage = "You must provide a Status Code (ToDO:0, InProgress:1, Done:2)")]
+    [Range(0, 2, ErrorMessage = "The Status Code must be between 0 and 2")]
     public ProjectTaskStatus Status { get; set; }
 
     // public string StatusStr => Status.ToString();
 
-    [Required]
+    [Required(ErrorMessage = "You must provide a a Priority Code (ToDO:0, InProgress:1, Done:2)")]
+    [Range(0, 2, ErrorMessage = "The Priority Code must be between 0 and 2")]
     public ProjectTaskPriority Priority { get; set; }
 
     // public string PriorityStr => Priority.ToString();
@@ -78,7 +80,7 @@ public class ProjectTask
 
     //[JsonIgnore]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public ICollection<ProjectTaskComment>? Comment { get; set; }
+    public ICollection<ProjectTaskComment>? Comments { get; set; }
 
     //[JsonIgnore]
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]

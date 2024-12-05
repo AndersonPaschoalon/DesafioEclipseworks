@@ -1,5 +1,9 @@
 ﻿using EclipseTaskManager.Context;
 using EclipseTaskManager.Models;
+using EclipseTaskManager.Repository;
+using EclipseTaskManager.DTOs;
+using EclipseTaskManager.DTOs.Mappings;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,63 +18,88 @@ namespace EclipseTaskManager.Controllers;
 [ApiController]
 public class ProjectTaskCommentsController : ControllerBase
 {
+    private readonly IUserRepository _userRepository;
+    private readonly IProjectRepository _projectRepository;
+    private readonly IProjectTaskRepository _taskRepository;
+    private readonly IProjectTaskCommentRepository _commentRepository;
+    private readonly IProjectTaskUpdateRepository _updateRepository;
+    private readonly ILogger _logger;
 
-    private readonly EclipseTaskManagerContext _context;
-
-    public ProjectTaskCommentsController(EclipseTaskManagerContext context)
+    public ProjectTaskCommentsController(IUserRepository userRepository,
+                                         IProjectRepository projectRepository,
+                                         IProjectTaskRepository taskRepository,
+                                         IProjectTaskCommentRepository commentRepository,
+                                         IProjectTaskUpdateRepository updateRepository,
+                                         ILogger<ProjectTaskCommentsController> logger)
     {
-        _context = context;
+        _userRepository = userRepository;
+        _projectRepository = projectRepository;
+        _taskRepository = taskRepository;
+        _commentRepository = commentRepository;
+        _updateRepository = updateRepository;
+        _logger = logger;
     }
 
     [HttpGet("all")]
-    public ActionResult<IEnumerable<ProjectTaskComment>> GetAll()
+    public ActionResult<IEnumerable<ProjectTaskCommentDTO>> GetAll()
     {
-        var comments = _context.ProjectTaskComments.ToList();
+        var comments = _commentRepository.GetComments();
         if (comments is null)
         {
             return NotFound("No comment found");
         }
-        return Ok(comments);
+        return Ok(comments.ToProjectTaskCommentDTOList());
     }
 
     [HttpGet("{id:int}", Name = "GetComment")]
-    public ActionResult<ProjectTaskComment> Get(int id)
+    public ActionResult<ProjectTaskCommentDTO> Get(int id)
     {
-        var comment = _context.ProjectTaskComments.FirstOrDefault(p => p.ProjectTaskCommentId == id);
+        var comment = _commentRepository.GetComment(id);
         if (comment is null)
         {
             return NotFound($"CommentId {id}");
         }
-        return Ok(comment);
+        return Ok(comment.ToProjectTaskCommentDTO());
+
     }
 
     [HttpPost]
-    public ActionResult Post(ProjectTaskComment comment)
+    public ActionResult<ProjectTaskCommentDTO> Post(ProjectTaskCommentDTO commentDto)
     {
-        if (comment is null)
+        if (commentDto is null)
         {
             return BadRequest("Invalid comment.");
         }
+        var comment = commentDto.ToProjectTaskComment();
 
-        var userExists = _context.Users.Any(u  => u.UserId == comment.UserId);
-        var projectExists = _context.Projects.Any(p  => p.ProjectId == comment.ProjectId);
-        var taskExists = _context.ProjectTasks.Any(t  => t.ProjectTaskId== comment.ProjectTaskId);
-
-        if (!userExists)
+        // validate user: user must exist
+        var user = _userRepository.GetUser(comment.UserId);
+        if (user is null)
         {
             return NotFound($"UserId {comment.UserId} not found.");
         }
-        if (!projectExists)
+
+        // validate project: project must exist
+        var proj = _projectRepository.GetProject(comment.ProjectId);
+        if (proj is null)
         {
             return NotFound($"ProjectId{comment.ProjectId} not found.");
         }
-        if (!taskExists)
+
+
+        // validate task: task must exist AND it must point to the same project the comment is pointing
+        var projectTask = _taskRepository.GetTask(comment.ProjectTaskId);
+        if (projectTask is null)
         {
             return NotFound($"TaskId {comment.ProjectTaskId} not found.");
         }
+        if (projectTask.ProjectId != comment.ProjectId)
+        {
+            return Conflict($"The ProjectTask and the Comment must point to the same Project ID. ProjectTask's project ID is {projectTask.ProjectId}");
+        }
 
-        // add comment to history
-        _context.ProjectTaskUpdates.Add(new ProjectTaskUpdate
+        // add comment to history table to
+        var historyEntry = new ProjectTaskUpdate
         {
             ModifiedField = nameof(comment.Comment),
             ModificationDate = DateTime.Now,
@@ -79,12 +108,13 @@ public class ProjectTaskCommentsController : ControllerBase
             ProjectId = comment.ProjectId,
             ProjectTaskId = comment.ProjectTaskId,
             UserId = comment.UserId,
-        });
+        };
 
-        _context.ProjectTaskComments.Add(comment);
-        _context.SaveChanges();
+        // update database
+        _commentRepository.Create(comment);
+        _updateRepository.Create(historyEntry);
 
-        return new CreatedAtRouteResult("GetComment", new { id = comment.ProjectTaskCommentId }, comment);
+        return new CreatedAtRouteResult("GetComment", new { id = comment.ProjectTaskCommentId }, comment.ToProjectTaskCommentDTO());
     }
 
     /// <summary>
@@ -96,17 +126,18 @@ public class ProjectTaskCommentsController : ControllerBase
     /// <param name="comment"></param>
     /// <returns></returns>
     [HttpPut]
-    public ActionResult<ProjectTaskComment> Put(ProjectTaskComment comment)
+    public ActionResult<ProjectTaskCommentDTO> Put(ProjectTaskCommentDTO commentDto)
     {
-        if (comment is null)
+        if (commentDto is null)
         {
             return BadRequest("Invalid comment.");
         }
-        var commentId = comment.ProjectTaskCommentId;
-        var taskComment = _context.ProjectTaskComments.FirstOrDefault(p => p.ProjectTaskCommentId == commentId);
+        var comment = commentDto.ToProjectTaskComment();
+
+        var taskComment = _commentRepository.GetComment(comment.ProjectTaskCommentId);
         if (taskComment == null)
         {
-            return NotFound($"Comment ID {commentId} not found.");
+            return NotFound($"Comment ID {comment.ProjectTaskCommentId} not found.");
         }
         if (taskComment.ProjectTaskId != comment.ProjectTaskId)
         {
@@ -125,7 +156,7 @@ public class ProjectTaskCommentsController : ControllerBase
         {
             try
             {
-                _context.ProjectTaskUpdates.Add(new ProjectTaskUpdate
+                var historyEntry = new ProjectTaskUpdate
                 {
                     ModifiedField = nameof(comment.Comment),
                     ModificationDate = DateTime.Now,
@@ -134,13 +165,13 @@ public class ProjectTaskCommentsController : ControllerBase
                     ProjectId = taskComment.ProjectId,
                     ProjectTaskId = taskComment.ProjectTaskId,
                     UserId = taskComment.UserId,
-                });
+                };
 
                 // Update the current entity properties
-                _context.Entry(taskComment).CurrentValues.SetValues(comment);
-                _context.SaveChanges();
+                _commentRepository.Update(comment);
+                _updateRepository.Create(historyEntry);
 
-                return Ok(comment);
+                return Ok(comment.ToProjectTaskCommentDTO());
             }
             catch (DbUpdateException ex)
             {
@@ -149,22 +180,18 @@ public class ProjectTaskCommentsController : ControllerBase
         }
 
         return NoContent();
-
-
     }
 
     [HttpDelete("{id:int}")]
-    public ActionResult Delete(int id)
+    public ActionResult<ProjectTaskCommentDTO> Delete(int id)
     {
-        var comment = _context.ProjectTaskComments.FirstOrDefault(p => p.ProjectTaskCommentId == id);
+        var comment = _commentRepository.GetComment(id);
         if (comment is null)
         {
             return NotFound($"CommentId {id} not found!");
         }
-        _context.ProjectTaskComments.Remove(comment);
-        _context.SaveChanges();
-
-        return Ok(comment);
+        _commentRepository.Delete(id);
+        return Ok(comment.ToProjectTaskCommentDTO());
     }
 
 

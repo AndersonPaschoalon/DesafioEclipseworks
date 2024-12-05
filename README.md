@@ -37,7 +37,8 @@ A arquitetura escolhida para aplicação seguiu o padrão MVC, no qual foram criado
 
 - Os endipoints são associados ao gerenciamento do ciclo de vida dos projeto. Vamos passar brevemente por caso um deles.
 
-- 
+
+
 #### Users
 
 ```
@@ -182,7 +183,6 @@ A tabela ProjectTasks também possui uma coluna "ConclusionDate" que armazena qua
 
 ##  Caso de uso: Ciclo de vida do gerenciamento de um projeto, e criação de relatórios
 
-TODO
 
 ##  Rodando a aplicação em um Container Docker (Windows)
 
@@ -233,9 +233,8 @@ TODO: connection
 
 ## Final: Identificação de melhorias
 
-1. Quando uma Task é deletada, os seus Comentários e Updates não estão sendo deletados em cascata. É muito importante que essa implementação seja realizada antes de ser colocado em produção. Ou então, caso não seja possivel, e a aplicação deva ser colocada em produção imeditamente, podemos adicionar um script em Migrations que elimina comentários e Updates de tasks que já foram deletadas. 
-1. Seria fundamental se separar os objetos de tráfego de dados (DTOs) dos objetos das entidades. No momento os mesmos objetos estão sendo utilizados por uma questão de agilidade no desenvolvimento, porém este é um débito técnico muito significativo, pois dificulta muito a evolução da solução. Para isso seria necessário se implementar essa segregração em uma API v2, totalmente desvinculada das entidades. Desta forma seria simples alterar a base de dados ou o modelo de transferência de dados, sem que um impacte no outro. 
-1. Melhorar o mecanismo de injeção de dependência do contexto, pois da forma que estra primeira versão foi desenvolvida a tecnologia de base de dados (MySQL) está FORTEMENTE acoplada a regra de negócio. O ideal é que o acoplamento da tecnologia e da regra de negócio seja minimo, de forma que possamos realizar a troca de tecnologia de forma simples. Além disso, isso agrega valor ao produto, uma vez que um novo cliente pode querer utilizar outro tipo de banco de dados. 
+1. Implementação de uma bibliotéca de logs padrão de mercado, como o Log4Net
+1. Aumento da cobertuda dos testes de unidade
 1. Implementação de mecanismos OWASP para tornar o sistema mais resilientes a ataques.
 
 
