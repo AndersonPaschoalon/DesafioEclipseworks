@@ -4,14 +4,12 @@ namespace EclipseTaskManager.Models;
 
 public class Report
 {
-
     public Report()
     {
-        // usersReports = new List<ReportUser>();
-        
+        userReports = new Dictionary<int, ReportUser>();
     }
 
-    public Dictionary<int, ReportUser> userReports;
+    public Dictionary<int, ReportUser> userReports { get; set; }
 
     public List<int> allCompletedTasks
     {
@@ -37,33 +35,4 @@ public class Report
         }
     }
 
-    // public List<ReportUser> usersReports { get; set; }
-
-    /*
-    public ReportUser allUsersReport 
-    {
-        get
-        {
-            ReportUser allUsers = new ReportUser { tasksInDone = new List<int>() };
-            foreach (ReportUser user in usersReports)
-            {
-                allUsers.tasksInDone.AddRange(user.tasksInDone);
-            }
-            return allUsers;
-        }
-    }
-
-
-    public int averageDone
-    {
-        get
-        {
-            if (usersReports.Count != 0)
-            {
-                return (int)allUsersReport.tasksInDone.Count / usersReports.Count;
-            }
-            return 0;
-        }
-    }
-    */
 }

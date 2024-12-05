@@ -8,6 +8,9 @@ using EclipseTaskManager.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EclipseTaskManager.Repository;
+using EclipseTaskManager.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace EclipseTaskManager.Tests
 {
@@ -36,8 +39,14 @@ namespace EclipseTaskManager.Tests
                 Name = "Test User 2",
             });
 
+            UserRepository userRepository = new UserRepository(context);
+            ProjectRepository projectRepository = new ProjectRepository(context);
+            var mockLogger = new Mock<ILogger<UsersController>>();
+
+
+
             context.SaveChanges();
-            _controller = new UsersController(context);
+            _controller = new UsersController(userRepository, projectRepository, mockLogger.Object);
         }
 
         [Test]
