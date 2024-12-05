@@ -1,0 +1,32 @@
+{
+	"info": {
+		"_postman_id": "697d24d7-7494-4fba-b32f-079fe3ac0d93",
+		"name": "DesafioEclipse",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15551116"
+	},
+	"item": [
+		{
+			"name": "projects/all",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7006/v1/api/projects/all",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7006",
+					"path": [
+						"v1",
+						"api",
+						"projects",
+						"all"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

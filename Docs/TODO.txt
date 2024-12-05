@@ -1,9 +1,11 @@
 # Fase 1: API Coding
 
+- analisar a atualização do historico de updates das tasks
+- implementar mecanismo de deleção de todos os comentarios associados com uma task
 - nos campos de base de dados usar [MaxLength(value)] para definir o tamano do campo da entidade na base de dados
 - nos objeos de daods utilizar [StringLength(val)]
 - mencionar em melhorias que posso criar arquivos de configuração especificos por ambiente - aula 63
-
+- historico de alterações devem ser mantidos depois da task ser deletada?
 
 ## Requisitos de alto nível
 

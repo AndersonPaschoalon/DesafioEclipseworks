@@ -21,9 +21,9 @@ public class ProjectRepository : IProjectRepository
     public Project GetProject(int id)
     {
         return _context.Projects.AsNoTracking()
-            .Include(pt => pt.User)
-            .Include(pt => pt.ProjectTasks)
-            .FirstOrDefault(p => p.ProjectId == id);
+                .Include(pt => pt.User)
+                .Include(pt => pt.ProjectTasks)
+                .FirstOrDefault(p => p.ProjectId == id);
     }
 
     public Project Create(Project project)

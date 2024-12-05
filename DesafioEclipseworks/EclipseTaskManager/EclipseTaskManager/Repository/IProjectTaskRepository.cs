@@ -4,8 +4,8 @@ namespace EclipseTaskManager.Repository;
 
 public interface IProjectTaskRepository
 {
-    IEnumerable<ProjectTask> GetAllProjectTasks();
-    ProjectTask GetProjectTaskById(int id);
+    IEnumerable<ProjectTask> GetTasks();
+    ProjectTask GetTask(int id);
     ProjectTask Create(ProjectTask projectTask);
     ProjectTask Update(ProjectTask projectTask);
     ProjectTask Delete(int id);

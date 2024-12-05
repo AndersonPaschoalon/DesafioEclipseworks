@@ -1,5 +1,6 @@
 ﻿using EclipseTaskManager.Context;
 using EclipseTaskManager.Models;
+using EclipseTaskManager.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -17,14 +18,30 @@ public class ProjectsController : ControllerBase
     // ActionResult Put(Project project)
     // ActionResult Delete(int id)
 
-    private readonly EclipseTaskManagerContext _context;
+    private readonly IProjectRepository _projectRepository;
+    private readonly IUserRepository _userRepository;
     private readonly ILogger _logger;
 
-
-    public ProjectsController(EclipseTaskManagerContext context, ILogger<ProjectsController> logger)
+    public ProjectsController(IProjectRepository projectRepository, IUserRepository userRepository, ILogger<ProjectsController> logger)
     {
-        _context = context;
+        //_context = context;
+        _projectRepository = projectRepository;
+        _userRepository = userRepository;
         _logger = logger;
+    }
+
+    [HttpGet("all")]
+    public ActionResult<IEnumerable<Project>> GetAll()
+    {
+        // retrive the user projects
+        var projects = _projectRepository.GetProjects();
+        if (projects is null || !projects.Any())
+        {
+            return NotFound($"No project found.");
+        }
+
+        return Ok(projects);
+
     }
 
     /// <summary>
@@ -38,16 +55,14 @@ public class ProjectsController : ControllerBase
         _logger.LogInformation($"===================GET:ProjectsController:GetByUser:userId={userId}===================");
 
         // check if the user exists
-        var user = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == userId);
+        var user = _userRepository.GetUser(userId);
         if (user == null)
         {
             return NotFound($"UserId {userId} not found.");
         }
 
         // retrive the user projects
-        var projects = _context.Projects
-            .Where(p => p.UserId == userId)
-            .ToList();
+        var projects = _projectRepository.GetProjects().Where(p => p.UserId == userId);
         if (projects is null || !projects.Any())
         {
             return NotFound($"No project found for user {userId}");
@@ -65,10 +80,10 @@ public class ProjectsController : ControllerBase
     [HttpGet("{id:int}", Name = "GetProject")]
     public ActionResult<Project> GetById(int id)
     {
-        var project = _context.Projects.AsNoTracking().FirstOrDefault(p => p.ProjectId == id);
+        var project = _projectRepository.GetProject(id);
         if (project is null)
         {
-            return NotFound();
+            return NotFound($"No Project found for ID {id}");
         }
         return Ok(project);
     }
@@ -89,17 +104,16 @@ public class ProjectsController : ControllerBase
 
         // check user id
         int userId = project.UserId;
-        var user = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == userId);
-        if (user == null)
+        var user = _userRepository.GetUser(userId);
+        if (user is null)
         {
             return NotFound($"UserId {userId} not found.");
         }
 
         // save new project in the database
-        try 
+        try
         {
-            _context.Projects.Add(project);
-            _context.SaveChanges();
+            _projectRepository.Create(project);
             return new CreatedAtRouteResult("GetProject", new { id = project.ProjectId }, project);
         }
         catch (DbUpdateException ex)
@@ -121,25 +135,23 @@ public class ProjectsController : ControllerBase
         {
             return BadRequest("Invalid Project.");
         }
+
         // validation: project and user must exist.
-        var proj = _context.Projects.AsNoTracking().FirstOrDefault(p => p.ProjectId == project.ProjectId);
-        if (proj is null)
+        var currProj = _projectRepository.GetProject(project.ProjectId);
+        if (currProj is null)
         {
             return NotFound($"Project with ID {project.ProjectId} not found!. You must provide a valid project to proceed.");
         }
-        var user = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == project.UserId);
+        var user = _userRepository.GetUser(project.UserId);
         if (user is null)
         {
             return NotFound($"User with ID {project.UserId} not found! You must provide a valid user to proceed.");
         }
 
-
         // update the project in the database
         try
         {
-            _context.Entry(project).State = EntityState.Modified;
-            _context.SaveChanges();
-
+            _projectRepository.Update(project);
             return Ok(project);
         }
         catch (DbUpdateException ex)
@@ -156,8 +168,8 @@ public class ProjectsController : ControllerBase
     [HttpDelete("{id:int}")]
     public ActionResult Delete(int id)
     {
+        var project = _projectRepository.GetProject(id);
         // check if the project exists
-        var project = _context.Projects.FirstOrDefault(p => p.ProjectId == id);
         if (project is null)
         {
             return NotFound($"Project {id} not found!");
@@ -166,12 +178,10 @@ public class ProjectsController : ControllerBase
         // project cannot be removed if there is any project task attached with it
         if (project.ProjectTasks != null && project.ProjectTasks.Count() > 0)
         {
-            return Forbid($"Cannot Delete Project {id}: A project cannot be deleted with active tasks. There are {project.ProjectTasks.Count} active tasks. Delete these tasks before proceeding.)");
+            return Conflict($"Cannot Delete Project {id}: A project cannot be deleted with active tasks. There are {project.ProjectTasks.Count} active tasks. Delete these tasks before proceeding.)");
         }
 
-        _context.Projects.Remove(project);
-        _context.SaveChanges();
-
+        _projectRepository.Delete(id);
         return Ok(project);
     }
 

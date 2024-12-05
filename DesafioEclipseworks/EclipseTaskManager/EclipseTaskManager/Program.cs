@@ -1,6 +1,7 @@
 using EclipseTaskManager.Context;
 using EclipseTaskManager.Extensions;
 using EclipseTaskManager.Logging;
+using EclipseTaskManager.Repository;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Text.Json.Serialization;
@@ -27,6 +28,13 @@ builder.Logging.AddProvider(new CustomLoggerProvider(new CustomLoggerProviderCon
 {
     LogLevel = LogLevel.Information
 }));
+
+// repositories dependency injection
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<IProjectTaskRepository, ProjectTaskRepository>();
+builder.Services.AddScoped<IProjectTaskCommentRepository, ProjectTaskCommentRepository>();
+builder.Services.AddScoped<IProjectTaskUpdateRepository, ProjectTaskUpdateRepository>();
 
 var app = builder.Build();
 

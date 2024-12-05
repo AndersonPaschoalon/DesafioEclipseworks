@@ -12,8 +12,8 @@ public class ProjectTask
 {
     public ProjectTask()
     {
-        Comments = null;
-        Updates = null;
+        Comments = new Collection<ProjectTaskComment>();
+        Updates = new Collection<ProjectTaskUpdate>();
     }
 
     public enum ProjectTaskStatus

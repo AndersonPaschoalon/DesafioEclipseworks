@@ -13,12 +13,12 @@ public class ProjectTaskCommentRepository : IProjectTaskCommentRepository
         _context = context;
     }
 
-    public IEnumerable<ProjectTaskComment> GetAllComments()
+    public IEnumerable<ProjectTaskComment> GetComments()
     {
         return _context.ProjectTaskComments.AsNoTracking().ToList();
     }
 
-    public ProjectTaskComment GetCommentById(int id)
+    public ProjectTaskComment GetComment(int id)
     {
         return _context.ProjectTaskComments.AsNoTracking()
             .Include(c => c.User)

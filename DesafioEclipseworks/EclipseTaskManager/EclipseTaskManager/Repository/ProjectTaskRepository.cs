@@ -13,12 +13,12 @@ public class ProjectTaskRepository : IProjectTaskRepository
         _context = context;
     }
 
-    public IEnumerable<ProjectTask> GetAllProjectTasks()
+    public IEnumerable<ProjectTask> GetTasks()
     {
         return _context.ProjectTasks.AsNoTracking().ToList();
     }
 
-    public ProjectTask GetProjectTaskById(int id)
+    public ProjectTask GetTask(int id)
     {
         return _context.ProjectTasks.AsNoTracking()
             .Include(pt => pt.User)

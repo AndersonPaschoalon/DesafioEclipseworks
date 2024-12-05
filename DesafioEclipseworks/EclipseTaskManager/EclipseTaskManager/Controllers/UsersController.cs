@@ -1,5 +1,6 @@
 ﻿using EclipseTaskManager.Context;
 using EclipseTaskManager.Models;
+using EclipseTaskManager.Repository;
 using EclipseTaskManager.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,11 +18,17 @@ public class UsersController : ControllerBase
     // ActionResult Put(int id, User user)
     // ActionResult Delete(int id)
 
-    private readonly EclipseTaskManagerContext _context;
+    private readonly IUserRepository _userRepository;
+    private readonly IProjectRepository _projectRepository;
+    private readonly ILogger _logger;
 
-    public UsersController(EclipseTaskManagerContext context)
+    public UsersController(IUserRepository userRepository, 
+        IProjectRepository projectRepository, 
+        ILogger<UsersController> logger)
     {
-        _context = context;
+        _userRepository = userRepository;
+        _projectRepository = projectRepository;
+        _logger = logger;
     }
 
     /// <summary>
@@ -31,7 +38,7 @@ public class UsersController : ControllerBase
     [HttpGet("all")]
     public ActionResult<IEnumerable<User>> GetAll()
     {
-        var users = _context.Users.AsNoTracking().ToList();
+        var users = _userRepository.GetUsers();
         if (users == null || !users.Any())
         {
             return NotFound("No users found.");
@@ -47,7 +54,7 @@ public class UsersController : ControllerBase
     [HttpGet("{id:int}", Name = "GetUser")]
     public ActionResult<User> Get(int id)
     {
-        var user = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == id);
+        var user = _userRepository.GetUser(id);
         if (user == null)
         {
             return NotFound($"UserId {id} not found.");
@@ -72,8 +79,7 @@ public class UsersController : ControllerBase
         user.Role = ObjectHelper.CastToEnum((int)user.Role, Models.User.UserRole.Consumer);
         try
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            _userRepository.Create(user);
             return CreatedAtRoute("GetUser", new { id = user.UserId }, user);
         }
         catch (DbUpdateException ex)
@@ -97,12 +103,11 @@ public class UsersController : ControllerBase
         {
             return BadRequest("Invalid user data.");
         }
+
         // update the user
         try
         {
-            _context.Entry(user).State = EntityState.Modified;
-            _context.SaveChanges();
-
+            _userRepository.Update(user);
             return Ok(user);
         }
         catch (DbUpdateException ex)
@@ -119,14 +124,15 @@ public class UsersController : ControllerBase
     [HttpDelete("{id:int}")]
     public ActionResult Delete(int id)
     {
-        var user = _context.Users.FirstOrDefault(u => u.UserId == id);
+        var user = _userRepository.GetUser(id);
         if (user == null)
         {
             return NotFound($"UserId {id} not found.");
         }
 
+
         // usuario não pode ter projetos em seu nome
-        var projects = _context.Projects.AsNoTracking().Where(p => p.UserId == id);
+        var projects = _projectRepository.GetProjects().Where(p => p.UserId == id);
         if (projects != null && projects.Count() > 0)
         {
             return Conflict($"Cannot remove user with ID {id}. This user has {projects.Count()} projects assigned to. Delete or change the projects owner first.");
@@ -134,9 +140,7 @@ public class UsersController : ControllerBase
 
         try
         {
-            _context.Users.Remove(user);
-            _context.SaveChanges();
-
+            _userRepository.Delete(id);
             return Ok(user);
         }
         catch (DbUpdateException ex)

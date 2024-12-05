@@ -14,12 +14,12 @@ public class ProjectTaskUpdateRepository : IProjectTaskUpdateRepository
         _context = context;
     }
 
-    public IEnumerable<ProjectTaskUpdate> GetAllUpdates()
+    public IEnumerable<ProjectTaskUpdate> GetUpdates()
     {
         return _context.ProjectTaskUpdates.AsNoTracking().ToList();
     }
 
-    public ProjectTaskUpdate GetUpdateById(int id)
+    public ProjectTaskUpdate GetUpdate(int id)
     {
         return _context.ProjectTaskUpdates.AsNoTracking()
             .Include(u => u.User)

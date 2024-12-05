@@ -1,5 +1,6 @@
 ﻿using EclipseTaskManager.Context;
 using EclipseTaskManager.Models;
+using EclipseTaskManager.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,18 +13,25 @@ namespace EclipseTaskManager.Controllers;
 [ApiController]
 public class ReportsController : ControllerBase
 {
-    private readonly EclipseTaskManagerContext _context;
 
-    public ReportsController(EclipseTaskManagerContext context)
+    private readonly IUserRepository _userRepository;
+    private readonly IProjectTaskRepository _taskRepository;
+    private readonly ILogger _logger;
+
+    public ReportsController(IUserRepository userRepository,
+                                  IProjectTaskRepository taskRepository,
+                                  ILogger<ReportsController> logger)
     {
-        _context = context;
+        _userRepository = userRepository;
+        _taskRepository = taskRepository;
+        _logger = logger;
     }
 
     [HttpGet("report")]
     public ActionResult<Report> GetUsersReport([FromQuery] int id, [FromQuery] int daysPrior = 30)
     {
         // select the user, if the user is not an admin, reject
-        var requestingUser = _context.Users.AsNoTracking().FirstOrDefault(u => u.UserId == id);
+        var requestingUser = _userRepository.GetUser(id);
         if (requestingUser == null || requestingUser.Role != Models.User.UserRole.Admin)
         {
             return Conflict("User is not allowed to request reports.");
@@ -31,10 +39,7 @@ public class ReportsController : ControllerBase
 
         // query all tasks  filter by conclusion date
         var daysPriorDateTime = DateTime.Now.AddDays(-daysPrior);
-        var projectTasks = _context.ProjectTasks
-                    .AsNoTracking()
-                    .Where(t => t.Status == ProjectTask.ProjectTaskStatus.Done && t.ConclusionDate >= daysPriorDateTime)
-                    .ToList();
+        var projectTasks = _taskRepository.GetTasks().Where(t => t.Status == ProjectTask.ProjectTaskStatus.Done && t.ConclusionDate >= daysPriorDateTime);
 
         Report report = new Report();
         if (projectTasks is not null) 
